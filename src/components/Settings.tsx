@@ -9,6 +9,7 @@ import {
   Shield,
   Check,
 } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -100,6 +101,25 @@ export const Settings: React.FC<SettingsProps> = ({
   // Startup intro preference
   const [startupIntroEnabled, setStartupIntroEnabled] = useState(true);
   
+  // Language settings
+  const { i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language || 'en');
+  
+  // Supported languages - matching LanguageSwitcher component
+  const languages = [
+    { code: 'en', name: 'English', nativeName: 'English' },
+    { code: 'zh-CN', name: 'Chinese (Simplified)', nativeName: '中文' },
+    { code: 'zh-TW', name: 'Chinese (Traditional)', nativeName: '繁體中文' },
+    { code: 'ja', name: 'Japanese', nativeName: '日本語' },
+    { code: 'ko', name: 'Korean', nativeName: '한국어' },
+    { code: 'de', name: 'German', nativeName: 'Deutsch' },
+    { code: 'fr', name: 'French', nativeName: 'Français' },
+    { code: 'es', name: 'Spanish', nativeName: 'Español' },
+    { code: 'it', name: 'Italian', nativeName: 'Italiano' },
+    { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
+    { code: 'ru', name: 'Russian', nativeName: 'Русский' },
+  ];
+  
   // Load settings on mount
   useEffect(() => {
     loadSettings();
@@ -111,6 +131,17 @@ export const Settings: React.FC<SettingsProps> = ({
     (async () => {
       const pref = await api.getSetting('startup_intro_enabled');
       setStartupIntroEnabled(pref === null ? true : pref === 'true');
+    })();
+    
+    // Load saved language preference
+    (async () => {
+      const savedLanguage = localStorage.getItem('preferred_language');
+      if (savedLanguage && languages.some(lang => lang.code === savedLanguage)) {
+        setCurrentLanguage(savedLanguage);
+        if (i18n.language !== savedLanguage) {
+          await i18n.changeLanguage(savedLanguage);
+        }
+      }
     })();
   }, []);
 
@@ -134,6 +165,22 @@ export const Settings: React.FC<SettingsProps> = ({
       setCurrentBinaryPath(path);
     } catch (err) {
       console.error("Failed to load Claude binary path:", err);
+    }
+  };
+
+  /**
+   * Handle language change
+   */
+  const handleLanguageChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLanguage = event.target.value;
+    setCurrentLanguage(newLanguage);
+    try {
+      await i18n.changeLanguage(newLanguage);
+      localStorage.setItem('preferred_language', newLanguage);
+      trackEvent.settingsChanged('language_changed', newLanguage);
+      setToast({ message: 'Language updated', type: 'success' });
+    } catch (error) {
+      setToast({ message: 'Failed to change language', type: 'error' });
     }
   };
 
@@ -773,6 +820,28 @@ export const Settings: React.FC<SettingsProps> = ({
                         }}
                       />
                     </div>
+
+                    {/* Language Selector */}
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor="language-select">Language</Label>
+                        <p className="text-caption text-muted-foreground mt-1">
+                          Choose your preferred language for the interface
+                        </p>
+                      </div>
+                      <select
+                        id="language-select"
+                        value={currentLanguage}
+                        onChange={handleLanguageChange}
+                        className="w-full max-w-xs px-3 py-2 border border-border rounded-md bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      >
+                        {languages.map((lang) => (
+                          <option key={lang.code} value={lang.code}>
+                            {lang.nativeName} ({lang.name})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </Card>
@@ -1092,4 +1161,4 @@ export const Settings: React.FC<SettingsProps> = ({
       />
     </div>
   );
-}; 
+};
