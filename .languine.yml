@@ -1,0 +1,41 @@
+version: 1
+project:
+  id: "prj_tyqe7w2f5k8prevnarvmvkp8"
+  name: "gooey-app"
+  base_locale: "en"
+
+extraction:
+  patterns:
+    - "src/**/*.tsx"
+    - "src/**/*.ts"
+  output: "src/locales/en/translation.json"
+  namespaces:
+    - "translation"
+
+sync:
+  strategy: "pull-request"
+  auto_merge: true
+  platforms:
+    - github
+
+locales:
+  - code: "zh-CN"
+    name: "Chinese (Simplified)"
+  - code: "zh-TW"
+    name: "Chinese (Traditional)"
+  - code: "ja"
+    name: "Japanese"
+  - code: "ko"
+    name: "Korean"
+  - code: "es"
+    name: "Spanish"
+  - code: "fr"
+    name: "French"
+  - code: "de"
+    name: "German"
+  - code: "pt"
+    name: "Portuguese"
+  - code: "ru"
+    name: "Russian"
+  - code: "it"
+    name: "Italian"

@@ -91,7 +91,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
     return (
       <div className={cn("text-center py-8 text-muted-foreground", className)}>
         <Play className="h-8 w-8 mx-auto mb-2 opacity-50" />
-        <p className="text-sm">No execution history yet</p>
+        <p className="text-sm">{t('agentrunslist.no_execution_history_yet')}</p>
       </div>
     );
   }
@@ -133,7 +133,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
                         {run.status === "running" && (
                           <div className="flex items-center gap-1">
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span className="text-xs text-green-600 font-medium">Running</span>
+                            <span className="text-xs text-green-600 font-medium">{t('agentrunslist.running')}</span>
                           </div>
                         )}
                       </div>

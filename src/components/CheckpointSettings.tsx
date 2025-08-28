@@ -143,8 +143,8 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
             <Wrench className="h-4 w-4 text-primary" />
           </div>
           <div>
-            <h3 className="text-heading-4 font-semibold">Checkpoint Settings</h3>
-            <p className="text-caption text-muted-foreground mt-0.5">Manage session checkpoints and recovery</p>
+            <h3 className="text-heading-4 font-semibold">{t('checkpointsettings.checkpoint_settings')}</h3>
+            <p className="text-caption text-muted-foreground mt-0.5">{t('checkpointsettings.manage_session_checkpoints_and_recovery')}</p>
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
         <div className="flex items-start gap-2.5">
           <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-500 mt-0.5 flex-shrink-0" />
           <div className="space-y-0.5">
-            <p className="text-caption font-medium text-amber-900 dark:text-amber-100">Experimental Feature</p>
+            <p className="text-caption font-medium text-amber-900 dark:text-amber-100">{t('checkpointsettings.experimental_feature')}</p>
             <p className="text-caption text-amber-700 dark:text-amber-300">
               Checkpointing may affect directory structure or cause data loss. Use with caution.
             </p>
@@ -192,7 +192,7 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
         {/* Auto-checkpoint toggle */}
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
-            <Label htmlFor="auto-checkpoint" className="text-label">Automatic Checkpoints</Label>
+            <Label htmlFor="auto-checkpoint" className="text-label">{t('checkpointsettings.automatic_checkpoints')}</Label>
             <p className="text-caption text-muted-foreground">
               Automatically create checkpoints based on the selected strategy
             </p>
@@ -207,7 +207,7 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
 
         {/* Checkpoint strategy */}
         <div className="space-y-2">
-          <Label htmlFor="strategy" className="text-label">Checkpoint Strategy</Label>
+          <Label htmlFor="strategy" className="text-label">{t('checkpointsettings.checkpoint_strategy')}</Label>
           <SelectComponent
             value={checkpointStrategy}
             onValueChange={(value: string) => setCheckpointStrategy(value as CheckpointStrategy)}
@@ -254,7 +254,7 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
               <HardDrive className="h-4 w-4 text-muted-foreground" />
-              <Label className="text-label">Storage Management</Label>
+              <Label className="text-label">{t('checkpointsettings.storage_management')}</Label>
             </div>
             <p className="text-caption text-muted-foreground">
               Total checkpoints: <span className="font-medium text-foreground">{totalCheckpoints}</span>
@@ -264,7 +264,7 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
 
         {/* Cleanup settings */}
         <div className="space-y-2">
-          <Label htmlFor="keep-count" className="text-label">Keep Recent Checkpoints</Label>
+          <Label htmlFor="keep-count" className="text-label">{t('checkpointsettings.keep_recent_checkpoints')}</Label>
           <div className="flex gap-2">
             <Input
               id="keep-count"

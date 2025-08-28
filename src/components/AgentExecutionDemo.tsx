@@ -171,7 +171,7 @@ body {
 
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-4">
-      <h1 className="text-2xl font-bold mb-6">Agent Execution Demo</h1>
+      <h1 className="text-2xl font-bold mb-6">{t('agentexecutiondemo.agent_execution_demo')}</h1>
       
       {messages.map((message, idx) => (
         <StreamMessage key={idx} message={message} streamMessages={messages} />

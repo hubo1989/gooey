@@ -535,7 +535,7 @@ export function AgentRunOutputViewer({
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading agent run...</p>
+          <p className="text-muted-foreground">{t('agentrunoutputviewer.loading_agent_run')}</p>
         </div>
       </div>
     );
@@ -557,7 +557,7 @@ export function AgentRunOutputViewer({
                     {run.status === 'running' && (
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-xs text-green-600 font-medium">Running</span>
+                        <span className="text-xs text-green-600 font-medium">{t('agentrunoutputviewer.running')}</span>
                       </div>
                     )}
                   </CardTitle>

@@ -619,7 +619,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
 
             {/* Model Selection */}
             <div className="space-y-3">
-              <Label className="text-caption text-muted-foreground">Model Selection</Label>
+              <Label className="text-caption text-muted-foreground">{t('agentexecution.model_selection')}</Label>
               <div className="flex gap-2">
                 <motion.button
                   type="button"
@@ -646,7 +646,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
                     </div>
                     <div className="text-left">
                       <div className="text-body-small font-medium">Claude 4 Sonnet</div>
-                      <div className="text-caption text-muted-foreground">Faster, efficient</div>
+                      <div className="text-caption text-muted-foreground">{t('agentexecution.faster_efficient')}</div>
                     </div>
                   </div>
                 </motion.button>
@@ -676,7 +676,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
                     </div>
                     <div className="text-left">
                       <div className="text-body-small font-medium">Claude 4 Opus</div>
-                      <div className="text-caption text-muted-foreground">More capable</div>
+                      <div className="text-caption text-muted-foreground">{t('agentexecution.more_capable')}</div>
                     </div>
                   </div>
                 </motion.button>
@@ -686,7 +686,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
             {/* Task Input */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label className="text-caption text-muted-foreground">Task Description</Label>
+                <Label className="text-caption text-muted-foreground">{t('agentexecution.task_description')}</Label>
                 {projectPath && (
                   <Button
                     variant="ghost"
@@ -696,7 +696,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
                     className="h-8 -mr-2"
                   >
                     <Settings2 className="h-3.5 w-3.5 mr-1.5" />
-                    <span className="text-caption">Configure Hooks</span>
+                    <span className="text-caption">{t('agentexecution.configure_hooks')}</span>
                   </Button>
                 )}
               </div>
@@ -768,7 +768,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
               {messages.length === 0 && !isRunning && (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <Terminal className="h-16 w-16 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Ready to Execute</h3>
+                  <h3 className="text-lg font-medium mb-2">{t('agentexecution.ready_to_execute')}</h3>
                   <p className="text-sm text-muted-foreground">
                     Enter a task to run the agent
                   </p>
@@ -779,7 +779,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
                 <div className="flex items-center justify-center h-full">
                   <div className="flex items-center gap-3">
                     <Loader2 className="h-6 w-6 animate-spin" />
-                    <span className="text-sm text-muted-foreground">Initializing agent...</span>
+                    <span className="text-sm text-muted-foreground">{t('agentexecution.initializing_agent')}</span>
                   </div>
                 </div>
               )}
@@ -832,11 +832,11 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
           {/* Modal Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold">{agent.name} - Output</h2>
+              <h2 className="text-lg font-semibold">{t('agentexecution.agentname_output')}</h2>
               {isRunning && (
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-600 font-medium">Running</span>
+                  <span className="text-xs text-green-600 font-medium">{t('agentexecution.running')}</span>
                 </div>
               )}
             </div>
@@ -909,7 +909,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
               {messages.length === 0 && !isRunning && (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <Terminal className="h-16 w-16 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Ready to Execute</h3>
+                  <h3 className="text-lg font-medium mb-2">{t('agentexecution.ready_to_execute')}</h3>
                   <p className="text-sm text-muted-foreground">
                     Enter a task to run the agent
                   </p>
@@ -920,7 +920,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
                 <div className="flex items-center justify-center h-full">
                   <div className="flex items-center gap-3">
                     <Loader2 className="h-6 w-6 animate-spin" />
-                    <span className="text-sm text-muted-foreground">Initializing agent...</span>
+                    <span className="text-sm text-muted-foreground">{t('agentexecution.initializing_agent')}</span>
                   </div>
                 </div>
               )}
@@ -965,7 +965,7 @@ export const AgentExecution: React.FC<AgentExecutionProps> = ({
       >
         <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col gap-0 p-0">
           <div className="px-6 py-4 border-b border-border">
-            <DialogTitle className="text-heading-2">Configure Hooks</DialogTitle>
+            <DialogTitle className="text-heading-2">{t('agentexecution.configure_hooks')}</DialogTitle>
             <DialogDescription className="mt-1 text-body-small text-muted-foreground">
               Configure hooks that run before, during, and after tool executions
             </DialogDescription>

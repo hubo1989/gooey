@@ -9,7 +9,12 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "check": "tsc --noEmit && cd src-tauri && cargo check"
+    "check": "tsc --noEmit && cd src-tauri && cargo check",
+    "i18n:extract": "i18next-scanner --config i18next-scanner.config.cjs",
+    "i18n:sync": "npx languine@latest sync",
+    "i18n:translate": "npx languine@latest translate",
+    "i18n:all": "npm run i18n:extract && npm run i18n:sync && npm run i18n:translate",
+    "i18n:check": "npm run i18n:extract && npm run check"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -41,11 +46,15 @@
     "diff": "^8.0.2",
     "framer-motion": "^12.0.0-alpha.1",
     "html2canvas": "^1.4.1",
+    "i18next": "^25.4.2",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
     "lucide-react": "^0.468.0",
     "posthog-js": "^1.258.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
+    "react-i18next": "^15.7.2",
     "react-markdown": "^9.0.3",
     "react-syntax-highlighter": "^15.6.1",
     "recharts": "^2.14.1",
@@ -56,12 +65,14 @@
     "zustand": "^5.0.6"
   },
   "devDependencies": {
+    "@languine/cli": "^0.5.2",
     "@tauri-apps/cli": "^2.7.1",
     "@types/node": "^22.15.30",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@types/sharp": "^0.32.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "i18next-scanner": "^4.6.0",
     "sharp": "^0.34.2",
     "typescript": "~5.6.2",
     "vite": "^6.0.3"

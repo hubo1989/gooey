@@ -262,7 +262,7 @@ export const AgentRunView: React.FC<AgentRunViewProps> = ({
               {renderIcon(run.agent_icon)}
               <div>
                 <h2 className="text-lg font-semibold">{run.agent_name}</h2>
-                <p className="text-xs text-muted-foreground">Execution History</p>
+                <p className="text-xs text-muted-foreground">{t('agentrunview.execution_history')}</p>
               </div>
             </div>
           </div>
@@ -324,7 +324,7 @@ export const AgentRunView: React.FC<AgentRunViewProps> = ({
           <CardContent className="p-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-medium">Task:</h3>
+                <h3 className="text-sm font-medium">{t('agentrunview.task')}</h3>
                 <p className="text-sm text-muted-foreground flex-1">{run.task}</p>
                 <Badge variant="outline" className="text-xs">
                   {run.model === 'opus' ? 'Claude 4 Opus' : 'Claude 4 Sonnet'}
