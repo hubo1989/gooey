@@ -12,13 +12,10 @@
     "settings": "设置",
     "usage": "使用仪表板"
   },
-  "navigation.agents": "",
-  "navigation.projects": "",
   "welcome": {
     "description": "Claude Code 的桌面图形界面",
     "title": "欢迎使用 Gooey"
   },
-  "welcome.title": "",
   "settings.settings": "设置",
   "settings.general_settings": "通用设置",
   "settings.custom_theme_colors": "自定义主题颜色",

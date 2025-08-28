@@ -12,13 +12,10 @@
     "settings": "Settings",
     "usage": "Usage Dashboard"
   },
-  "navigation.agents": "",
-  "navigation.projects": "",
   "welcome": {
     "description": "A desktop GUI for Claude Code",
     "title": "Welcome to Gooey"
   },
-  "welcome.title": "",
   "settings.settings": "Settings",
   "settings.general_settings": "General Settings",
   "settings.custom_theme_colors": "Custom Theme Colors",

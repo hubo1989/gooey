@@ -5,7 +5,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AnalyticsErrorBoundary } from "./components/AnalyticsErrorBoundary";
 import { analytics, resourceMonitor } from "./lib/analytics";
 import { PostHogProvider } from "posthog-js/react";
-import "./lib/i18n"; // 导入i18n配置
+import { i18nInitPromise } from "./lib/i18n"; // 导入i18n配置和初始化promise
 import "./assets/shimmer.css";
 import "./styles.css";
 
@@ -26,22 +26,47 @@ resourceMonitor.startMonitoring(120000);
   }
 })();
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <PostHogProvider
-      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
-      options={{
-        api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
-        defaults: '2025-05-24',
-        capture_exceptions: true,
-        debug: import.meta.env.MODE === "development",
-      }}
-    >
-      <ErrorBoundary>
-        <AnalyticsErrorBoundary>
-          <App />
-        </AnalyticsErrorBoundary>
-      </ErrorBoundary>
-    </PostHogProvider>
-  </React.StrictMode>,
-);
+// 等待i18n初始化完成后再渲染应用
+i18nInitPromise.then(() => {
+  ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+    <React.StrictMode>
+      <PostHogProvider
+        apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
+        options={{
+          api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+          defaults: '2025-05-24',
+          capture_exceptions: true,
+          debug: import.meta.env.MODE === "development",
+        }}
+      >
+        <ErrorBoundary>
+          <AnalyticsErrorBoundary>
+            <App />
+          </AnalyticsErrorBoundary>
+        </ErrorBoundary>
+      </PostHogProvider>
+    </React.StrictMode>,
+  );
+}).catch((error) => {
+  console.error("Failed to initialize i18n:", error);
+  // 即使i18n初始化失败，仍然渲染应用（使用默认语言）
+  ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+    <React.StrictMode>
+      <PostHogProvider
+        apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
+        options={{
+          api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+          defaults: '2025-05-24',
+          capture_exceptions: true,
+          debug: import.meta.env.MODE === "development",
+        }}
+      >
+        <ErrorBoundary>
+          <AnalyticsErrorBoundary>
+            <App />
+          </AnalyticsErrorBoundary>
+        </ErrorBoundary>
+      </PostHogProvider>
+    </React.StrictMode>,
+  );
+});

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Loader2, Play, Clock, CheckCircle, XCircle, Trash2, Import, ChevronDown, ChevronRight, FileJson, Globe, Download, Plus, History } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +21,7 @@ import { CreateAgent } from '@/components/CreateAgent';
 import { useTabState } from '@/hooks/useTabState';
 
 export const Agents: React.FC = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('agents');
   const [showCreateAgent, setShowCreateAgent] = useState(false);
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -200,7 +202,7 @@ export const Agents: React.FC = () => {
             <div>
               <h1 className="text-3xl font-bold tracking-tight">{t('agents.agents')}</h1>
               <p className="mt-1 text-sm text-muted-foreground">
-                Manage your Claude Code agents
+                {t('agents.manage_description')}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -325,7 +327,7 @@ export const Agents: React.FC = () => {
                   <Bot className="w-12 h-12 text-muted-foreground mb-4" />
                   <h3 className="text-lg font-semibold mb-2">{t('agents.no_agents_yet')}</h3>
                   <p className="text-muted-foreground mb-4">
-                    Create your first agent to get started
+                    {t('agents.create_first_agent')}
                   </p>
                   <Button onClick={() => setShowCreateAgent(true)}>
                     <Plus className="w-4 h-4 mr-2" />
@@ -374,7 +376,7 @@ export const Agents: React.FC = () => {
                       </div>
 
                       <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                        No description provided
+                        {t('agents.no_description')}
                       </p>
 
                       <div className="flex items-center justify-between">

@@ -4,7 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
 // 动态加载翻译资源
-i18n
+export const i18nInitPromise = i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)

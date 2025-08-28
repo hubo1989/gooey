@@ -9,7 +9,7 @@ import {
   HookValidationError,
   HookValidationWarning,
   HookCommand,
-} from '@/types/hooks';
+} from '../types/hooks';
 
 export class HooksManager {
   /**
@@ -246,4 +246,4 @@ export class HooksManager {
   static generateId(): string {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
-} 
+}
