@@ -3,7 +3,9 @@
     "back": "返回",
     "error": "错误",
     "loading": "加载中...",
-    "success": "成功"
+    "success": "成功",
+    "language_updated": "语言已更新",
+    "language_update_failed": "语言更新失败"
   },
   "navigation": {
     "agents": "CC 代理",

@@ -183,9 +183,14 @@ export const Settings: React.FC<SettingsProps> = ({
       await i18n.changeLanguage(newLanguage);
       localStorage.setItem('preferred_language', newLanguage);
       trackEvent.settingsChanged('language_changed', newLanguage);
-      setToast({ message: 'Language updated', type: 'success' });
+      
+      // 触发全局语言变化事件，强制所有组件重新渲染
+      window.dispatchEvent(new CustomEvent('language-changed'));
+      
+      // 使用翻译后的成功消息
+      setToast({ message: t('common.language_updated'), type: 'success' });
     } catch (error) {
-      setToast({ message: 'Failed to change language', type: 'error' });
+      setToast({ message: t('common.language_update_failed'), type: 'error' });
     }
   };
 

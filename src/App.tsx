@@ -69,6 +69,17 @@ function AppContent() {
   useAppLifecycle();
   const trackEvent = useTrackEvent();
   
+  // 监听语言变化并强制重新渲染
+  const [languageVersion, setLanguageVersion] = useState(0);
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguageVersion(v => v + 1);
+    };
+    
+    window.addEventListener('language-changed', handleLanguageChange);
+    return () => window.removeEventListener('language-changed', handleLanguageChange);
+  }, []);
+  
   // Track user journey milestones
   const [hasTrackedFirstChat] = useState(false);
   // const [hasTrackedFirstAgent] = useState(false);

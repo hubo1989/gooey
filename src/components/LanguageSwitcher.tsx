@@ -31,6 +31,9 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
     i18n.changeLanguage(languageCode);
     // 保存语言偏好到 localStorage
     localStorage.setItem('preferred_language', languageCode);
+    
+    // 触发全局语言变化事件，强制所有组件重新渲染
+    window.dispatchEvent(new CustomEvent('language-changed'));
   };
 
   return (
