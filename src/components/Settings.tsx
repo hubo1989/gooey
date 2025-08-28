@@ -133,14 +133,19 @@ export const Settings: React.FC<SettingsProps> = ({
       setStartupIntroEnabled(pref === null ? true : pref === 'true');
     })();
     
-    // Load saved language preference
+    // Load saved language preference and ensure it applies
     (async () => {
       const savedLanguage = localStorage.getItem('preferred_language');
       if (savedLanguage && languages.some(lang => lang.code === savedLanguage)) {
         setCurrentLanguage(savedLanguage);
-        if (i18n.language !== savedLanguage) {
-          await i18n.changeLanguage(savedLanguage);
-        }
+        // 确保语言切换生效，即使i18n已经初始化
+        setTimeout(async () => {
+          if (i18n.language !== savedLanguage) {
+            await i18n.changeLanguage(savedLanguage);
+            // 强制重新渲染以应用语言变化
+            window.dispatchEvent(new CustomEvent('language-changed'));
+          }
+        }, 100);
       }
     })();
   }, []);

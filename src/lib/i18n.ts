@@ -16,7 +16,14 @@ export const i18nInitPromise = i18n
     },
     backend: {
       loadPath: './src/locales/{{lng}}/translation.json'
-    }
+    },
+    // 配置语言检测器，降低优先级，允许手动设置覆盖
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
+    },
+    // 支持的语言列表
+    supportedLngs: ['en', 'zh-CN', 'zh-TW', 'ja', 'ko', 'de', 'fr', 'es', 'it', 'pt', 'ru']
   });
 
 export default i18n;
