@@ -188,9 +188,9 @@ export const Settings: React.FC<SettingsProps> = ({
       window.dispatchEvent(new CustomEvent('language-changed'));
       
       // 使用翻译后的成功消息
-      setToast({ message: t('common.language_updated'), type: 'success' });
+      setToast({ message: i18n.t('common.language_updated'), type: 'success' });
     } catch (error) {
-      setToast({ message: t('common.language_update_failed'), type: 'error' });
+      setToast({ message: i18n.t('common.language_update_failed'), type: 'error' });
     }
   };
 

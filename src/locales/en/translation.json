@@ -36,7 +36,9 @@
     "back": "Back",
     "error": "Error",
     "loading": "Loading...",
-    "success": "Success"
+    "success": "Success",
+    "language_updated": "Language updated successfully",
+    "language_update_failed": "Failed to update language"
   },
   "navigation": {
     "agents": "CC Agents",
