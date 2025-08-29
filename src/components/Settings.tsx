@@ -180,8 +180,12 @@ export const Settings: React.FC<SettingsProps> = ({
     const newLanguage = event.target.value;
     setCurrentLanguage(newLanguage);
     try {
-      await i18n.changeLanguage(newLanguage);
+      // 立即保存到localStorage，使用i18next的键名
+      localStorage.setItem('i18nextLng', newLanguage);
       localStorage.setItem('preferred_language', newLanguage);
+      
+      // 更改语言并等待完成
+      await i18n.changeLanguage(newLanguage);
       trackEvent.settingsChanged('language_changed', newLanguage);
       
       // 触发全局语言变化事件，强制所有组件重新渲染
@@ -189,6 +193,9 @@ export const Settings: React.FC<SettingsProps> = ({
       
       // 使用翻译后的成功消息
       setToast({ message: i18n.t('common.language_updated'), type: 'success' });
+      
+      // 强制页面刷新以确保语言立即生效
+      window.location.reload();
     } catch (error) {
       setToast({ message: i18n.t('common.language_update_failed'), type: 'error' });
     }

@@ -77,8 +77,15 @@ function AppContent() {
     };
     
     window.addEventListener('language-changed', handleLanguageChange);
+    
+    // 初始化时检查并应用保存的语言偏好
+    const savedLanguage = localStorage.getItem('i18nextLng') || localStorage.getItem('preferred_language');
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      i18n.changeLanguage(savedLanguage);
+    }
+    
     return () => window.removeEventListener('language-changed', handleLanguageChange);
-  }, []);
+  }, [i18n]);
   
   // Track user journey milestones
   const [hasTrackedFirstChat] = useState(false);

@@ -28,12 +28,18 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
   const changeLanguage = (languageCode: string) => {
-    i18n.changeLanguage(languageCode);
-    // 保存语言偏好到 localStorage
+    // 立即保存到localStorage，使用i18next的键名
+    localStorage.setItem('i18nextLng', languageCode);
     localStorage.setItem('preferred_language', languageCode);
+    
+    // 更改语言并等待完成
+    i18n.changeLanguage(languageCode);
     
     // 触发全局语言变化事件，强制所有组件重新渲染
     window.dispatchEvent(new CustomEvent('language-changed'));
+    
+    // 强制页面刷新以确保语言立即生效
+    window.location.reload();
   };
 
   return (
