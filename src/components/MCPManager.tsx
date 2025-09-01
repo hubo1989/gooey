@@ -105,7 +105,7 @@ export const MCPManager: React.FC<MCPManagerProps> = ({
             <div>
               <h1 className="text-heading-1">{t('navigation.mcp_servers')}</h1>
               <p className="mt-1 text-body-small text-muted-foreground">
-                Manage Model Context Protocol servers
+                {t('mcp.manage_mcp_servers')}
               </p>
             </div>
           </div>
@@ -136,13 +136,13 @@ export const MCPManager: React.FC<MCPManagerProps> = ({
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-3 w-full max-w-md mb-6 h-auto p-1">
                 <TabsTrigger value="servers" className="py-2.5 px-3">
-                  Servers
+                  {t('mcp.servers_tab')}
                 </TabsTrigger>
                 <TabsTrigger value="add" className="py-2.5 px-3">
-                  Add Server
+                  {t('mcp.add_server_tab')}
                 </TabsTrigger>
                 <TabsTrigger value="import" className="py-2.5 px-3">
-                  Import/Export
+                  {t('mcp.import_export_tab')}
                 </TabsTrigger>
               </TabsList>
 

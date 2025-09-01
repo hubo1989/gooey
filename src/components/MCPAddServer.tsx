@@ -225,7 +225,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
     return (
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-sm font-medium">Environment Variables</Label>
+          <Label className="text-sm font-medium">{t('mcp.environment_variables')}</Label>
           <Button
             variant="outline"
             size="sm"
@@ -233,7 +233,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
             className="gap-2"
           >
             <Plus className="h-3 w-3" />
-            Add Variable
+            {t('mcp.add_variable')}
           </Button>
         </div>
         
@@ -273,9 +273,9 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h3 className="text-base font-semibold">Add MCP Server</h3>
+        <h3 className="text-base font-semibold">{t('mcp.add_mcp_server')}</h3>
         <p className="text-sm text-muted-foreground mt-1">
-          Configure a new Model Context Protocol server
+          {t('mcp.configure_new_mcp_server')}
         </p>
       </div>
 
@@ -304,7 +304,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
                   onChange={(e) => setStdioName(e.target.value)}
                 />
                 <p className="text-xs text-muted-foreground">
-                  A unique name to identify this server
+                  {t('mcp.server_name_description')}
                 </p>
               </div>
 
@@ -318,7 +318,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
                   className="font-mono"
                 />
                 <p className="text-xs text-muted-foreground">
-                  The command to execute the server
+                  {t('mcp.command_description')}
                 </p>
               </div>
 
@@ -332,7 +332,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
                   className="font-mono"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Space-separated command arguments
+                  {t('mcp.args_description')}
                 </p>
               </div>
 
@@ -361,12 +361,12 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
                 {saving ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Adding Server...
+{t('mcp.adding_server')}
                   </>
                 ) : (
                   <>
                     <Plus className="h-4 w-4" />
-                    Add Stdio Server
+                    {t('mcp.add_stdio_server')}
                   </>
                 )}
               </Button>
@@ -401,7 +401,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
                   className="font-mono"
                 />
                 <p className="text-xs text-muted-foreground">
-                  The SSE endpoint URL
+                  {t('mcp.url_description')}
                 </p>
               </div>
 
@@ -435,7 +435,7 @@ export const MCPAddServer: React.FC<MCPAddServerProps> = ({
                 ) : (
                   <>
                     <Plus className="h-4 w-4" />
-                    Add SSE Server
+                    {t('mcp.add_sse_server')}
                   </>
                 )}
               </Button>
