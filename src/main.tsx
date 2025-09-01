@@ -8,6 +8,7 @@ import { PostHogProvider } from "posthog-js/react";
 import { i18nInitPromise, default as i18n } from "./lib/i18n"; // 导入i18n配置和初始化promise
 import "./assets/shimmer.css";
 import "./styles.css";
+import AppIcon from "./assets/nfo/asterisk-logo.png";
 
 // Initialize analytics before rendering
 analytics.initialize();
@@ -43,6 +44,22 @@ const setupLanguageListener = () => {
   
   window.addEventListener('language-changed', handleLanguageChange as EventListener);
 };
+
+// Set favicon to the new app icon (avoids needing /public)
+(() => {
+  try {
+    const existing = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    const link = existing ?? document.createElement("link");
+    link.rel = "icon";
+    link.type = "image/png";
+    link.href = AppIcon;
+    if (!existing) {
+      document.head.appendChild(link);
+    }
+  } catch (_) {
+    // Non-fatal if document/head is not available
+  }
+})();
 
 // 等待i18n初始化完成后再渲染应用
 i18nInitPromise.then(() => {

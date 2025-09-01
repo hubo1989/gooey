@@ -140,7 +140,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
   );
 
   const getAgentDisplayName = (fileName: string) => {
-    return fileName.replace(".gooey.json", "").replace(/-/g, " ")
+    return fileName.replace(".opcode.json", "").replace(/-/g, " ")
       .split(" ")
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
@@ -154,7 +154,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
   const handleGitHubLinkClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      await open("https://github.com/getAsterisk/gooey/tree/main/cc_agents");
+      await open("https://github.com/getAsterisk/opcode/tree/main/cc_agents");
     } catch (error) {
       console.error('Failed to open GitHub link:', error);
     }
@@ -179,7 +179,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
                 onClick={handleGitHubLinkClick}
                 className="text-primary hover:underline inline-flex items-center gap-1"
               >
-                github.com/getAsterisk/gooey/cc_agents
+                github.com/getAsterisk/opcode/cc_agents
                 <Globe className="h-3 w-3" />
               </button>
             </p>
