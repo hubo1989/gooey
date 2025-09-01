@@ -63,11 +63,13 @@ import { open } from "@tauri-apps/plugin-shell";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 /**
  * Widget for TodoWrite tool - displays a beautiful TODO list
  */
 export const TodoWidget: React.FC<{ todos: any[]; result?: any }> = ({ todos, result: _result }) => {
+  const { t } = useTranslation();
   const statusIcons = {
     completed: <CheckCircle2 className="h-4 w-4 text-green-500" />,
     in_progress: <Clock className="h-4 w-4 text-blue-500 animate-pulse" />,
@@ -84,7 +86,7 @@ export const TodoWidget: React.FC<{ todos: any[]; result?: any }> = ({ todos, re
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
         <FileEdit className="h-4 w-4 text-primary" />
-        <span className="text-sm font-medium">Todo List</span>
+        <span className="text-sm font-medium">{t('tools.todoList')}</span>
       </div>
       <div className="space-y-2">
         {todos.map((todo, idx) => (
@@ -110,7 +112,7 @@ export const TodoWidget: React.FC<{ todos: any[]; result?: any }> = ({ todos, re
                   variant="outline" 
                   className={cn("text-xs", priorityColors[todo.priority as keyof typeof priorityColors])}
                 >
-                  {todo.priority}
+                  {t(`tools.priority.${todo.priority}`)}
                 </Badge>
               )}
             </div>
@@ -125,6 +127,7 @@ export const TodoWidget: React.FC<{ todos: any[]; result?: any }> = ({ todos, re
  * Widget for LS (List Directory) tool
  */
 export const LSWidget: React.FC<{ path: string; result?: any }> = ({ path, result }) => {
+  const { t } = useTranslation();
   // If we have a result, show it using the LSResultWidget
   if (result) {
     let resultContent = '';
@@ -146,7 +149,7 @@ export const LSWidget: React.FC<{ path: string; result?: any }> = ({ path, resul
       <div className="space-y-2">
         <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
           <FolderOpen className="h-4 w-4 text-primary" />
-          <span className="text-sm">Directory contents for:</span>
+          <span className="text-sm">{t('tools.directoryContents')}</span>
           <code className="text-sm font-mono bg-background px-2 py-0.5 rounded">
             {path}
           </code>
@@ -159,14 +162,14 @@ export const LSWidget: React.FC<{ path: string; result?: any }> = ({ path, resul
   return (
     <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
       <FolderOpen className="h-4 w-4 text-primary" />
-      <span className="text-sm">Listing directory:</span>
+      <span className="text-sm">{t('tools.listingDirectory')}</span>
       <code className="text-sm font-mono bg-background px-2 py-0.5 rounded">
         {path}
       </code>
       {!result && (
         <div className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
           <div className="h-2 w-2 bg-blue-500 rounded-full animate-pulse" />
-          <span>Loading...</span>
+          <span>{t('common.loading')}</span>
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Plus, 
@@ -119,6 +120,7 @@ export const HooksEditor: React.FC<HooksEditorProps> = ({
   const [selectedEvent, setSelectedEvent] = useState<HookEvent>('PreToolUse');
   const [showTemplateDialog, setShowTemplateDialog] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const { t } = useTranslation();
   const [validationWarnings, setValidationWarnings] = useState<string[]>([]);
   const isInitialMount = React.useRef(true);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -781,7 +783,7 @@ export const HooksEditor: React.FC<HooksEditorProps> = ({
                         ) : (
                           <Save className="h-4 w-4 mr-2" />
                         )}
-                        {isSaving ? "Saving..." : "Save"}
+                        {isSaving ? t("common.saving") : t("common.save")}
                       </Button>
                     )}
                   </>
@@ -927,4 +929,4 @@ export const HooksEditor: React.FC<HooksEditorProps> = ({
       )}
     </div>
   );
-}; 
+};

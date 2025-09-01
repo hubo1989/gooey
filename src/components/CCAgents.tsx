@@ -40,6 +40,7 @@ import { AgentExecution } from "./AgentExecution";
 import { AgentRunsList } from "./AgentRunsList";
 import { GitHubAgentBrowser } from "./GitHubAgentBrowser";
 import { ICON_MAP } from "./IconPicker";
+import { useTranslation } from "react-i18next";
 
 interface CCAgentsProps {
   /**
@@ -64,6 +65,7 @@ export type AgentIconName = keyof typeof AGENT_ICONS;
  * <CCAgents onBack={() => setView('home')} />
  */
 export const CCAgents: React.FC<CCAgentsProps> = ({ onBack, className }) => {
+  const { t } = useTranslation();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [runs, setRuns] = useState<AgentRunWithMetrics[]>([]);
   const [loading, setLoading] = useState(true);
@@ -419,40 +421,40 @@ export const CCAgents: React.FC<CCAgentsProps> = ({ onBack, className }) => {
                                   variant="ghost"
                                   onClick={() => handleExecuteAgent(agent)}
                                   className="flex items-center gap-1"
-                                  title="Execute agent"
+                                  title={t('buttons.execute_agent')}
                                 >
                                   <Play className="h-3 w-3" />
-                                  Execute
+                                  {t('buttons.execute')}
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => handleEditAgent(agent)}
                                   className="flex items-center gap-1"
-                                  title="Edit agent"
+                                  title={t('buttons.edit')}
                                 >
                                   <Edit className="h-3 w-3" />
-                                  Edit
+                                  {t('buttons.edit')}
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => handleExportAgent(agent)}
                                   className="flex items-center gap-1"
-                                  title="Export agent to .gooey.json"
+                                  title={t('buttons.export_agent')}
                                 >
                                   <Upload className="h-3 w-3" />
-                                  Export
+                                  {t('buttons.export')}
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => handleDeleteAgent(agent)}
                                   className="flex items-center gap-1 text-destructive hover:text-destructive"
-                                  title="Delete agent"
+                                  title={t('buttons.delete')}
                                 >
                                   <Trash2 className="h-3 w-3" />
-                                  Delete
+                                  {t('buttons.delete')}
                                 </Button>
                               </CardFooter>
                             </Card>
@@ -543,8 +545,7 @@ export const CCAgents: React.FC<CCAgentsProps> = ({ onBack, className }) => {
               Delete Agent
             </DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the agent "{agentToDelete?.name}"? 
-              This action cannot be undone and will permanently remove the agent and all its associated data.
+              {t('agents.delete_confirmation', { name: agentToDelete?.name })}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">

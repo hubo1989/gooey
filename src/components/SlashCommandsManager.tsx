@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { 
   Plus, 
   Trash2, 
@@ -92,6 +93,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
   className,
   scopeFilter = 'all',
 }) => {
+  const { t } = useTranslation();
   const [commands, setCommands] = useState<SlashCommand[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -325,7 +327,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search commands..."
+              placeholder={t('slashcommands.search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9"
@@ -555,7 +557,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
               <div className="space-y-2">
                 <Label>Command Name*</Label>
                 <Input
-                  placeholder="e.g., review, fix-issue"
+                  placeholder={t('slashcommands.name_placeholder')}
                   value={commandForm.name}
                   onChange={(e) => setCommandForm(prev => ({ ...prev, name: e.target.value }))}
                 />
@@ -564,7 +566,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
               <div className="space-y-2">
                 <Label>Namespace (Optional)</Label>
                 <Input
-                  placeholder="e.g., frontend, backend"
+                  placeholder={t('slashcommands.namespace_placeholder')}
                   value={commandForm.namespace}
                   onChange={(e) => setCommandForm(prev => ({ ...prev, namespace: e.target.value }))}
                 />
@@ -575,7 +577,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
             <div className="space-y-2">
               <Label>Description (Optional)</Label>
               <Input
-                placeholder="Brief description of what this command does"
+                placeholder={t('slashcommands.description_placeholder')}
                 value={commandForm.description}
                 onChange={(e) => setCommandForm(prev => ({ ...prev, description: e.target.value }))}
               />
@@ -585,7 +587,7 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
             <div className="space-y-2">
               <Label>Command Content*</Label>
               <Textarea
-                placeholder="Enter the prompt content. Use $ARGUMENTS for dynamic values."
+                placeholder={t('slashcommands.content_placeholder')}
                 value={commandForm.content}
                 onChange={(e) => setCommandForm(prev => ({ ...prev, content: e.target.value }))}
                 className="min-h-[150px] font-mono text-sm"
@@ -726,4 +728,4 @@ export const SlashCommandsManager: React.FC<SlashCommandsManagerProps> = ({
       </Dialog>
     </div>
   );
-}; 
+};

@@ -21,6 +21,7 @@ import { StreamMessage } from "./StreamMessage";
 import { AGENT_ICONS } from "./CCAgents";
 import type { ClaudeStreamMessage } from "./AgentExecution";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { useTranslation } from "react-i18next";
 
 interface AgentRunViewProps {
   /**
@@ -53,6 +54,7 @@ export const AgentRunView: React.FC<AgentRunViewProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copyPopoverOpen, setCopyPopoverOpen] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     loadRun();

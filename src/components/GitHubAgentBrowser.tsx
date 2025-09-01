@@ -13,6 +13,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { api, type GitHubAgentFile, type AgentExport, type Agent } from "@/lib/api";
@@ -45,6 +46,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
   const [selectedAgent, setSelectedAgent] = useState<AgentPreview | null>(null);
   const [importing, setImporting] = useState(false);
   const [existingAgents, setExistingAgents] = useState<Agent[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isOpen) {
@@ -164,7 +166,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Globe className="h-5 w-5" />
-            Import Agent from GitHub
+            {t('githubagentbrowser.import_agent_from_github')}
           </DialogTitle>
         </DialogHeader>
 
@@ -172,7 +174,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
           {/* Repository Info */}
           <div className="px-4 py-3 bg-muted/50 rounded-lg mb-4">
             <p className="text-sm text-muted-foreground">
-              Agents are fetched from{" "}
+              {t('githubagentbrowser.agents_fetched_from')}{" "}
               <button
                 onClick={handleGitHubLinkClick}
                 className="text-primary hover:underline inline-flex items-center gap-1"
@@ -182,7 +184,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
               </button>
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              You can contribute your custom agents to the repository!
+              {t('githubagentbrowser.contribute_agents')}
             </p>
           </div>
 
@@ -191,7 +193,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search agents..."
+                placeholder={t('githubagentbrowser.search_agents')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -217,7 +219,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
               <div className="flex flex-col items-center justify-center h-64 text-center">
                 <FileJson className="h-12 w-12 text-muted-foreground mb-4" />
                 <p className="text-sm text-muted-foreground">
-                  {searchQuery ? "No agents found matching your search" : "No agents available"}
+                  {searchQuery ? t('githubagentbrowser.no_agents_found') : t('githubagentbrowser.no_agents_available')}
                 </p>
               </div>
             ) : (
@@ -250,7 +252,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
                             {isAgentImported(agent.name) && (
                               <Badge variant="secondary" className="ml-2 flex-shrink-0">
                                 <Check className="h-3 w-3 mr-1" />
-                                Imported
+                                {t('githubagentbrowser.imported')}
                               </Badge>
                             )}
                           </div>
@@ -269,7 +271,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
                             }}
                           >
                             <Eye className="h-3 w-3 mr-2" />
-                            Preview
+                            {t('githubagentbrowser.preview')}
                           </Button>
                         </CardFooter>
                       </Card>
@@ -288,7 +290,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
           <Dialog open={!!selectedAgent} onOpenChange={() => setSelectedAgent(null)}>
             <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
               <DialogHeader>
-                <DialogTitle>Agent Preview</DialogTitle>
+                <DialogTitle>{t('githubagentbrowser.agent_preview')}</DialogTitle>
               </DialogHeader>
 
               <div className="flex-1 overflow-y-auto">
@@ -320,7 +322,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
 
                     {/* System Prompt */}
                     <div>
-                      <h4 className="text-sm font-medium mb-2">System Prompt</h4>
+                      <h4 className="text-sm font-medium mb-2">{t('githubagentbrowser.system_prompt')}</h4>
                       <div className="bg-muted rounded-lg p-3 max-h-48 overflow-y-auto">
                         <pre className="text-xs whitespace-pre-wrap font-mono">
                           {selectedAgent.data.agent.system_prompt}
@@ -331,7 +333,7 @@ export const GitHubAgentBrowser: React.FC<GitHubAgentBrowserProps> = ({
                     {/* Default Task */}
                     {selectedAgent.data.agent.default_task && (
                       <div>
-                        <h4 className="text-sm font-medium mb-2">Default Task</h4>
+                        <h4 className="text-sm font-medium mb-2">{t('githubagentbrowser.default_task')}</h4>
                         <div className="bg-muted rounded-lg p-3">
                           <p className="text-sm">{selectedAgent.data.agent.default_task}</p>
                         </div>

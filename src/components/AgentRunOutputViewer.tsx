@@ -27,6 +27,7 @@ import { formatISOTimestamp } from '@/lib/date-utils';
 import { AGENT_ICONS } from './CCAgents';
 import type { ClaudeStreamMessage } from './AgentExecution';
 import { useTabState } from '@/hooks/useTabState';
+import { useTranslation } from 'react-i18next';
 
 interface AgentRunOutputViewerProps {
   /**
@@ -58,6 +59,7 @@ export function AgentRunOutputViewer({
   className 
 }: AgentRunOutputViewerProps) {
   const { updateTabTitle, updateTabStatus } = useTabState();
+  const { t } = useTranslation();
   const [run, setRun] = useState<AgentRunWithMetrics | null>(null);
   const [messages, setMessages] = useState<ClaudeStreamMessage[]>([]);
   const [rawJsonlOutput, setRawJsonlOutput] = useState<string[]>([]);
@@ -628,18 +630,18 @@ export function AgentRunOutputViewer({
                   align="end"
                 />
                 <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsFullscreen(!isFullscreen)}
-                  title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-                  className="h-8 px-2"
-                >
-                  {isFullscreen ? (
-                    <Minimize2 className="h-4 w-4" />
-                  ) : (
-                    <Maximize2 className="h-4 w-4" />
-                  )}
-                </Button>
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                    title={isFullscreen ? t('buttons.exit_fullscreen') : t('buttons.fullscreen')}
+                    className="h-8 px-2"
+                  >
+                    {isFullscreen ? (
+                      <Minimize2 className="h-4 w-4" />
+                    ) : (
+                      <Maximize2 className="h-4 w-4" />
+                    )}
+                  </Button>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -769,13 +771,13 @@ export function AgentRunOutputViewer({
                 </Button>
               )}
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsFullscreen(false)}
-              >
-                <Minimize2 className="h-4 w-4 mr-2" />
-                Exit Fullscreen
-              </Button>
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsFullscreen(false)}
+                >
+                  <Minimize2 className="h-4 w-4 mr-2" />
+                  {t('buttons.exit_fullscreen')}
+                </Button>
             </div>
           </div>
           <div 
@@ -826,4 +828,4 @@ export function AgentRunOutputViewer({
   );
 }
 
-export default AgentRunOutputViewer; 
+export default AgentRunOutputViewer;

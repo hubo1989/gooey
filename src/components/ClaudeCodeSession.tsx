@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Copy,
@@ -92,6 +93,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
   const [showSlashCommandsSettings, setShowSlashCommandsSettings] = useState(false);
   const [forkCheckpointId, setForkCheckpointId] = useState<string | null>(null);
   const [forkSessionName, setForkSessionName] = useState("");
+  const { t } = useTranslation();
   
   // Queued prompts state
   const [queuedPrompts, setQueuedPrompts] = useState<Array<{ id: string; prompt: string; model: "sonnet" | "opus" }>>([]);
@@ -814,7 +816,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
       }
     } catch (err) {
       console.error("Failed to send prompt:", err);
-      setError("Failed to send prompt");
+      setError(t("session.failedToSendPrompt"));
       setIsLoading(false);
       hasActiveSessionRef.current = false;
     }
@@ -991,7 +993,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
       const cancelMessage: ClaudeStreamMessage = {
         type: "system",
         subtype: "info",
-        result: "Session cancelled by user",
+        result: t("session.cancelledByUser"),
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, cancelMessage]);
@@ -1003,7 +1005,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
       const errorMessage: ClaudeStreamMessage = {
         type: "system",
         subtype: "error",
-        result: `Failed to cancel execution: ${err instanceof Error ? err.message : 'Unknown error'}. The process may still be running in the background.`,
+        result: t("session.failedToCancel", { error: err instanceof Error ? err.message : t("common.unknownError") }),
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -1052,7 +1054,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
       setForkSessionName("");
     } catch (err) {
       console.error("Failed to fork checkpoint:", err);
-      setError("Failed to fork checkpoint");
+      setError(t("session.failedToForkCheckpoint"));
     } finally {
       setIsLoading(false);
     }

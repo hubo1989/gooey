@@ -217,18 +217,18 @@ export const Agents: React.FC = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={handleImportFromFile}>
                     <FileJson className="w-4 h-4 mr-2" />
-                    From File
+                    {t('buttons.from_file')}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setShowGitHubBrowser(true)}>
                     <Globe className="w-4 h-4 mr-2" />
-                    From GitHub
+                    {t('buttons.from_github')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
               <Button onClick={() => setShowCreateAgent(true)}>
                 <Plus className="w-4 h-4 mr-2" />
-                Create Agent
+                {t('buttons.create_agent')}
               </Button>
             </div>
           </div>
@@ -288,14 +288,12 @@ export const Agents: React.FC = () => {
                 <Button
                   variant="outline"
                   onClick={() => setShowDeleteDialog(false)}
-                >
-                  Cancel
-                </Button>
+                >{t('buttons.cancel')}</Button>
                 <Button
                   variant="destructive"
                   onClick={handleDeleteAgent}
                 >
-                  Delete
+                  {t('buttons.delete')}
                 </Button>
               </div>
             </motion.div>
@@ -331,7 +329,7 @@ export const Agents: React.FC = () => {
                   </p>
                   <Button onClick={() => setShowCreateAgent(true)}>
                     <Plus className="w-4 h-4 mr-2" />
-                    Create Agent
+                    {t('buttons.create_agent')}
                   </Button>
                 </div>
               ) : (
@@ -355,11 +353,11 @@ export const Agents: React.FC = () => {
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem onClick={() => handleRunAgent(agent)}>
                               <Play className="w-4 h-4 mr-2" />
-                              Run
+                              {t('buttons.run')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => handleExportAgent(agent)}>
                               <Download className="w-4 h-4 mr-2" />
-                              Export
+                              {t('buttons.export')}
                             </DropdownMenuItem>
                             <DropdownMenuItem 
                               onClick={() => {
@@ -369,7 +367,7 @@ export const Agents: React.FC = () => {
                               className="text-destructive"
                             >
                               <Trash2 className="w-4 h-4 mr-2" />
-                              Delete
+                              {t('buttons.delete')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -388,7 +386,7 @@ export const Agents: React.FC = () => {
                           onClick={() => handleRunAgent(agent)}
                         >
                           <Play className="w-3 h-3 mr-1" />
-                          Run
+                          {t('buttons.run')}
                         </Button>
                       </div>
                     </Card>

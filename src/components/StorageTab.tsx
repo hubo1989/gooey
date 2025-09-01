@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Database,
@@ -81,6 +82,7 @@ interface QueryResult {
  * StorageTab component - A beautiful SQLite database viewer/editor
  */
 export const StorageTab: React.FC = () => {
+  const { t } = useTranslation();
   const [tables, setTables] = useState<TableInfo[]>([]);
   const [selectedTable, setSelectedTable] = useState<string>("");
   const [tableData, setTableData] = useState<TableData | null>(null);
@@ -285,14 +287,14 @@ export const StorageTab: React.FC = () => {
       setTableData(null);
       setShowResetConfirm(false);
       setToast({
-        message: "Database Reset Complete: The database has been restored to its default state with empty tables (agents, agent_runs, app_settings).",
+        message: t("common.database_reset_complete"),
         type: "success",
       });
     } catch (err) {
       console.error("Failed to reset database:", err);
       setError("Failed to reset database");
       setToast({
-        message: "Reset Failed: Failed to reset the database. Please try again.",
+        message: t("common.database_reset_failed"),
         type: "error",
       });
     } finally {
@@ -304,7 +306,7 @@ export const StorageTab: React.FC = () => {
    * Format cell value for display
    */
   const formatCellValue = (value: any, maxLength: number = 100): string => {
-    if (value === null) return "NULL";
+    if (value === null) return t("common.null");
     if (value === undefined) return "";
     if (typeof value === "boolean") return value ? "true" : "false";
     if (typeof value === "object") return JSON.stringify(value);
@@ -335,7 +337,7 @@ export const StorageTab: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Database className="h-4 w-4 text-primary" />
-              <h3 className="text-sm font-semibold">Database Storage</h3>
+              <h3 className="text-sm font-semibold">{t('storagetab.database_storage')}</h3>
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -345,7 +347,7 @@ export const StorageTab: React.FC = () => {
                 className="gap-2 h-8 text-xs"
               >
                 <Terminal className="h-3 w-3" />
-                SQL Query
+                {t("common.sql_query")}
               </Button>
               <Button
                 variant="destructive"
@@ -354,7 +356,7 @@ export const StorageTab: React.FC = () => {
                 className="gap-2 h-8 text-xs"
               >
                 <RefreshCw className="h-3 w-3" />
-                Reset DB
+                {t("common.reset_db")}
               </Button>
             </div>
           </div>
@@ -363,7 +365,7 @@ export const StorageTab: React.FC = () => {
           <div className="flex items-center gap-3">
             <Select value={selectedTable} onValueChange={setSelectedTable}>
               <SelectTrigger className="w-[200px] h-8 text-xs">
-                <SelectValue placeholder="Select a table">
+                <SelectValue placeholder={t("common.select_a_table")}>
                   {selectedTable && (
                     <div className="flex items-center gap-2">
                       <Table className="h-3 w-3" />
@@ -389,7 +391,7 @@ export const StorageTab: React.FC = () => {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
               <Input
-                placeholder="Search in table..."
+                placeholder={t("common.search_in_table")}
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="pl-8 h-8 text-xs"
@@ -404,7 +406,7 @@ export const StorageTab: React.FC = () => {
                 className="gap-2 h-8 text-xs"
               >
                 <Plus className="h-3 w-3" />
-                New Row
+                {t("common.new_row")}
               </Button>
             )}
           </div>
@@ -435,7 +437,7 @@ export const StorageTab: React.FC = () => {
                     </th>
                   ))}
                   <th className="px-3 py-2 text-right text-xs font-medium text-muted-foreground">
-                    Actions
+                    {t("common.actions")}
                   </th>
                 </tr>
               </thead>
@@ -518,9 +520,11 @@ export const StorageTab: React.FC = () => {
           {tableData.total_pages > 1 && (
             <div className="flex items-center justify-between p-3 border-t">
               <div className="text-xs text-muted-foreground">
-                Showing {(currentPage - 1) * pageSize + 1} to{" "}
-                {Math.min(currentPage * pageSize, tableData.total_rows)} of{" "}
-                {tableData.total_rows} rows
+                {t("common.showing_rows", {
+                  start: (currentPage - 1) * pageSize + 1,
+                  end: Math.min(currentPage * pageSize, tableData.total_rows),
+                  total: tableData.total_rows
+                })}
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -531,10 +535,10 @@ export const StorageTab: React.FC = () => {
                   className="h-7 text-xs"
                 >
                   <ChevronLeft className="h-3 w-3" />
-                  Previous
+                  {t("common.previous")}
                 </Button>
                 <div className="text-xs">
-                  Page {currentPage} of {tableData.total_pages}
+                  {t("common.page_of", { current: currentPage, total: tableData.total_pages })}
                 </div>
                 <Button
                   variant="outline"
@@ -543,7 +547,7 @@ export const StorageTab: React.FC = () => {
                   disabled={currentPage === tableData.total_pages}
                   className="h-7 text-xs"
                 >
-                  Next
+                  {t("common.next")}
                   <ChevronRight className="h-3 w-3" />
                 </Button>
               </div>
@@ -573,20 +577,20 @@ export const StorageTab: React.FC = () => {
       <Dialog open={!!editingRow} onOpenChange={() => setEditingRow(null)}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Row</DialogTitle>
+            <DialogTitle>{t("common.edit_row")}</DialogTitle>
             <DialogDescription>
-              Update the values for this row in the {selectedTable} table.
+              {t("common.update_row_description", { table: selectedTable })}
             </DialogDescription>
           </DialogHeader>
           {editingRow && tableData && (
             <div className="space-y-4">
               {tableData.columns.map((column) => (
                 <div key={column.name} className="space-y-2">
-                  <Label htmlFor={`edit-${column.name}`}>
+                  <Label htmlFor={`new-${column.name}`}>
                     {column.name}
                     {column.pk && (
                       <span className="text-xs text-muted-foreground ml-2">
-                        (Primary Key)
+                        ({t("common.primary_key")})
                       </span>
                     )}
                   </Label>
@@ -616,13 +620,13 @@ export const StorageTab: React.FC = () => {
                         })
                       }
                       disabled={column.pk}
-                      placeholder={column.dflt_value || "NULL"}
+                      placeholder={column.dflt_value || t("common.null")}
                     />
                   )}
                   <p className="text-xs text-muted-foreground">
-                    Type: {column.type_name}
-                    {column.notnull && ", NOT NULL"}
-                    {column.dflt_value && `, Default: ${column.dflt_value}`}
+                    {t("common.type")}: {column.type_name}
+                    {column.notnull && `, ${t("common.not_null")}`}
+                    {column.dflt_value && `, ${t("common.default")}: ${column.dflt_value}`}
                   </p>
                 </div>
               ))}
@@ -630,7 +634,7 @@ export const StorageTab: React.FC = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditingRow(null)}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               onClick={() => handleUpdateRow(editingRow!)}
@@ -639,7 +643,7 @@ export const StorageTab: React.FC = () => {
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Update"
+                t("common.update")
               )}
             </Button>
           </DialogFooter>
@@ -649,11 +653,11 @@ export const StorageTab: React.FC = () => {
       {/* New Row Dialog */}
       <Dialog open={!!newRow} onOpenChange={() => setNewRow(null)}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>New Row</DialogTitle>
-            <DialogDescription>
-              Add a new row to the {selectedTable} table.
-            </DialogDescription>
+            <DialogHeader>
+              <DialogTitle>{t("common.new_row")}</DialogTitle>
+              <DialogDescription>
+                {t("common.add_row_description", { table: selectedTable })}
+              </DialogDescription>
           </DialogHeader>
           {newRow && tableData && (
             <div className="space-y-4">
@@ -691,12 +695,13 @@ export const StorageTab: React.FC = () => {
                           [column.name]: e.target.value,
                         })
                       }
-                      placeholder={column.dflt_value || "NULL"}
+                      placeholder={column.dflt_value || t("common.null")}
                     />
                   )}
                   <p className="text-xs text-muted-foreground">
-                    Type: {column.type_name}
-                    {column.dflt_value && `, Default: ${column.dflt_value}`}
+                    {t("common.type")}: {column.type_name}
+                    {column.notnull && `, ${t("common.not_null")}`}
+                    {column.dflt_value && `, ${t("common.default")}: ${column.dflt_value}`}
                   </p>
                 </div>
               ))}
@@ -704,7 +709,7 @@ export const StorageTab: React.FC = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setNewRow(null)}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               onClick={() => handleInsertRow(newRow!)}
@@ -713,7 +718,7 @@ export const StorageTab: React.FC = () => {
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Insert"
+                t("common.insert")
               )}
             </Button>
           </DialogFooter>
@@ -723,12 +728,11 @@ export const StorageTab: React.FC = () => {
       {/* Delete Confirmation Dialog */}
       <Dialog open={!!deletingRow} onOpenChange={() => setDeletingRow(null)}>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Row</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this row? This action cannot be
-              undone.
-            </DialogDescription>
+            <DialogHeader>
+              <DialogTitle>{t("common.delete_row")}</DialogTitle>
+              <DialogDescription>
+                {t("common.delete_row_description")}
+              </DialogDescription>
           </DialogHeader>
           {deletingRow && (
             <div className="rounded-md bg-muted p-4">
@@ -750,7 +754,7 @@ export const StorageTab: React.FC = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeletingRow(null)}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="destructive"
@@ -760,7 +764,7 @@ export const StorageTab: React.FC = () => {
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Delete"
+                t("common.delete")
               )}
             </Button>
           </DialogFooter>
@@ -771,18 +775,15 @@ export const StorageTab: React.FC = () => {
       <Dialog open={showResetConfirm} onOpenChange={setShowResetConfirm}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Reset Database</DialogTitle>
+            <DialogTitle>{t("common.reset_database")}</DialogTitle>
             <DialogDescription>
-              This will delete all data and recreate the database with its default structure 
-              (empty tables for agents, agent_runs, and app_settings). The database will be 
-              restored to the same state as when you first installed the app. This action 
-              cannot be undone.
+              {t("common.reset_database_description")}
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center gap-3 p-4 rounded-md bg-destructive/10 text-destructive">
             <AlertTriangle className="h-5 w-5" />
             <span className="text-sm font-medium">
-              All your agents, runs, and settings will be permanently deleted!
+              {t("common.reset_database_warning")}
             </span>
           </div>
           <DialogFooter>
@@ -790,7 +791,7 @@ export const StorageTab: React.FC = () => {
               variant="outline"
               onClick={() => setShowResetConfirm(false)}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="destructive"
@@ -800,7 +801,7 @@ export const StorageTab: React.FC = () => {
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Reset Database"
+                t("common.reset_database")
               )}
             </Button>
           </DialogFooter>
@@ -811,19 +812,19 @@ export const StorageTab: React.FC = () => {
       <Dialog open={showSqlEditor} onOpenChange={setShowSqlEditor}>
         <DialogContent className="max-w-4xl max-h-[80vh]">
           <DialogHeader>
-            <DialogTitle>SQL Query Editor</DialogTitle>
+            <DialogTitle>{t("common.sql_query_editor")}</DialogTitle>
             <DialogDescription>
-              Execute raw SQL queries on the database. Use with caution.
+              {t("common.sql_query_description")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="sql-query">SQL Query</Label>
+              <Label htmlFor="sql-query">{t("common.sql_query")}</Label>
               <Textarea
                 id="sql-query"
                 value={sqlQuery}
                 onChange={(e) => setSqlQuery(e.target.value)}
-                placeholder="SELECT * FROM agents LIMIT 10;"
+                placeholder={t("storagetab.sql_placeholder")}
                 className="font-mono text-sm h-32"
               />
             </div>
@@ -843,11 +844,10 @@ export const StorageTab: React.FC = () => {
                   <div className="p-3 rounded-md bg-green-500/10 text-green-600 dark:text-green-400 text-sm">
                     <div className="flex items-center gap-2">
                       <Check className="h-4 w-4" />
-                      Query executed successfully. {sqlResult.rows_affected} rows
-                      affected.
+                      {t("common.query_executed_successfully", { rows: sqlResult.rows_affected })}
                       {sqlResult.last_insert_rowid && (
                         <span>
-                          Last insert ID: {sqlResult.last_insert_rowid}
+                          {t("common.last_insert_id")}: {sqlResult.last_insert_rowid}
                         </span>
                       )}
                     </div>
@@ -873,10 +873,10 @@ export const StorageTab: React.FC = () => {
                             <tr key={i} className="border-b">
                               {row.map((cell, j) => {
                                 const formattedValue = formatCellValue(cell, 50);
-                                const fullValue = cell === null ? "NULL" : 
-                                                cell === undefined ? "" : 
-                                                typeof cell === "object" ? JSON.stringify(cell, null, 2) : 
-                                                String(cell);
+                      const fullValue = cell === null ? t("common.null") : 
+                                      cell === undefined ? "" : 
+                                      typeof cell === "object" ? JSON.stringify(cell, null, 2) : 
+                                      String(cell);
                                 const isTruncated = fullValue.length > 50;
                                 
                                 return (
@@ -925,7 +925,7 @@ export const StorageTab: React.FC = () => {
                 setSqlError(null);
               }}
             >
-              Close
+              {t("common.close")}
             </Button>
             <Button
               onClick={handleExecuteSql}
@@ -934,7 +934,7 @@ export const StorageTab: React.FC = () => {
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Execute"
+                t("common.execute")
               )}
             </Button>
           </DialogFooter>
@@ -953,4 +953,4 @@ export const StorageTab: React.FC = () => {
       </ToastContainer>
     </div>
   );
-}; 
+};

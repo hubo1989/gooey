@@ -5,6 +5,7 @@ import { useTabState } from '@/hooks/useTabState';
 import { Tab, useTabContext } from '@/contexts/TabContext';
 import { cn } from '@/lib/utils';
 import { useTrackEvent } from '@/hooks';
+import { useTranslation } from 'react-i18next';
 
 interface TabItemProps {
   tab: Tab;
@@ -17,28 +18,29 @@ interface TabItemProps {
 
 const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDragging = false, setDraggedTabId }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { t } = useTranslation();
   
   const getIcon = () => {
     switch (tab.type) {
-      case 'chat':
+      case t('tab_types.chat'):
         return MessageSquare;
-      case 'agent':
-      case 'agents':
+      case t('tab_types.agent'):
+      case t('tab_types.agents'):
         return Bot;
-      case 'projects':
+      case t('tab_types.projects'):
         return Folder;
-      case 'usage':
+      case t('tab_types.usage'):
         return BarChart;
-      case 'mcp':
+      case t('tab_types.mcp'):
         return Server;
-      case 'settings':
+      case t('tab_types.settings'):
         return Settings;
-      case 'claude-md':
-      case 'claude-file':
+      case t('tab_types.claude_md'):
+      case t('tab_types.claude_file'):
         return FileText;
-      case 'agent-execution':
-      case 'create-agent':
-      case 'import-agent':
+      case t('tab_types.agent_execution'):
+      case t('tab_types.create_agent'):
+      case t('tab_types.import_agent'):
         return Bot;
       default:
         return MessageSquare;
@@ -47,9 +49,9 @@ const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDr
 
   const getStatusIcon = () => {
     switch (tab.status) {
-      case 'running':
+      case t('tab_status.running'):
         return <Loader2 className="w-3 h-3 animate-spin" />;
-      case 'error':
+      case t('tab_status.error'):
         return <AlertCircle className="w-3 h-3 text-red-500" />;
       default:
         return null;
@@ -102,7 +104,7 @@ const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDr
         {tab.hasUnsavedChanges && !statusIcon && (
           <span 
             className="w-1.5 h-1.5 bg-primary rounded-full"
-            title="Unsaved changes"
+            title={t('common.unsaved_changes_warning')}
           />
         )}
       </div>
@@ -119,7 +121,7 @@ const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDr
           "focus:outline-none focus:ring-1 focus:ring-destructive/50",
           (isHovered || isActive) ? "opacity-100" : "opacity-0"
         )}
-        title={`Close ${tab.title}`}
+        title={t('buttons.close_tab', { tabTitle: tab.title })}
         tabIndex={-1}
       >
         <X className="w-3 h-3" />
@@ -147,6 +149,7 @@ export const TabManager: React.FC<TabManagerProps> = ({ className }) => {
   // Access reorderTabs from context
   const { reorderTabs } = useTabContext();
 
+  const { t } = useTranslation();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftScroll, setShowLeftScroll] = useState(false);
   const [showRightScroll, setShowRightScroll] = useState(false);
@@ -320,7 +323,7 @@ export const TabManager: React.FC<TabManagerProps> = ({ className }) => {
               "transition-colors duration-200 flex items-center justify-center",
               "bg-background/80 backdrop-blur-sm shadow-sm border border-border/50"
             )}
-            title="Scroll tabs left"
+            title={t('buttons.scroll_left')}
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M15 18l-6-6 6-6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
@@ -369,7 +372,7 @@ export const TabManager: React.FC<TabManagerProps> = ({ className }) => {
                 ? "hover:bg-muted/60 text-muted-foreground hover:text-foreground"
                 : "opacity-50 cursor-not-allowed text-muted-foreground"
             )}
-            title={canAddTab() ? "New project (Ctrl+T)" : "Maximum tabs reached"}
+            title={canAddTab() ? t('buttons.new_tab') : t('common.max_tabs_reached')}
           >
             <Plus className="w-4 h-4" />
           </motion.button>
@@ -394,7 +397,7 @@ export const TabManager: React.FC<TabManagerProps> = ({ className }) => {
               "transition-colors duration-200 flex items-center justify-center",
               "bg-background/80 backdrop-blur-sm shadow-sm border border-border/50"
             )}
-            title="Scroll tabs right"
+            title={t('common.scroll_tabs_right')}
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M9 18l6-6-6-6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />

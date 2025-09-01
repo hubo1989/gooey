@@ -33,13 +33,25 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
     localStorage.setItem('preferred_language', languageCode);
     
     // 更改语言并等待完成
-    i18n.changeLanguage(languageCode);
-    
-    // 触发全局语言变化事件，强制所有组件重新渲染
-    window.dispatchEvent(new CustomEvent('language-changed'));
-    
-    // 强制页面刷新以确保语言立即生效
-    window.location.reload();
+    i18n.changeLanguage(languageCode).then(() => {
+      // 更新HTML语言属性
+      document.documentElement.lang = languageCode;
+      
+      // 触发全局语言变化事件，通知所有组件
+      window.dispatchEvent(new CustomEvent('language-changed', { 
+        detail: { language: languageCode } 
+      }));
+      
+      // 使用翻译后的成功消息
+      window.dispatchEvent(new CustomEvent('show-toast', {
+        detail: { message: i18n.t('common.language_updated'), type: 'success' }
+      }));
+    }).catch((error) => {
+      console.error('Language change failed:', error);
+      window.dispatchEvent(new CustomEvent('show-toast', {
+        detail: { message: i18n.t('common.language_update_failed'), type: 'error' }
+      }));
+    });
   };
 
   return (
@@ -49,6 +61,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
           variant="ghost"
           size="sm"
           className={`flex items-center space-x-2 ${className}`}
+          data-testid="language-switcher"
         >
           <Globe className="h-4 w-4" />
           <span className="text-xs font-medium">{currentLanguage.nativeName}</span>
@@ -62,6 +75,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className })
             className={`flex items-center justify-between ${
               i18n.language === language.code ? 'bg-accent' : ''
             }`}
+            data-testid={`language-option-${language.code}`}
           >
             <div className="flex items-center space-x-2">
               <span className="text-sm">{language.nativeName}</span>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Download, Upload, FileText, Loader2, Info, Network, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -24,6 +25,7 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
   onImportCompleted,
   onError,
 }) => {
+  const { t } = useTranslation();
   const [importingDesktop, setImportingDesktop] = useState(false);
   const [importingJson, setImportingJson] = useState(false);
   const [importScope, setImportScope] = useState("local");
@@ -117,7 +119,7 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
         onImportCompleted(imported, failed);
       } else if (jsonData.type && jsonData.command) {
         // Single server format
-        const name = prompt("Enter a name for this server:");
+        const name = prompt(t('mcp.server_name_prompt'));
         if (!name) return;
 
         const result = await api.mcpAddJson(name, content, importScope);
@@ -366,4 +368,4 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
       </Card>
     </div>
   );
-}; 
+};

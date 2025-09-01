@@ -9,6 +9,7 @@ import { formatISOTimestamp } from "@/lib/date-utils";
 import type { AgentRunWithMetrics } from "@/lib/api";
 import { AGENT_ICONS } from "./CCAgents";
 import { useTabState } from "@/hooks/useTabState";
+import { useTranslation } from "react-i18next";
 
 interface AgentRunsListProps {
   /**
@@ -43,6 +44,7 @@ export const AgentRunsList: React.FC<AgentRunsListProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const { createAgentTab } = useTabState();
+  const { t } = useTranslation();
   
   // Calculate pagination
   const totalPages = Math.ceil(runs.length / ITEMS_PER_PAGE);

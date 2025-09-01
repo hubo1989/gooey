@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/api";
+import { useTranslation } from "react-i18next";
+import { api } from "../lib/api";
 import { 
   X, 
   Folder, 
@@ -118,6 +119,7 @@ export const FilePicker: React.FC<FilePickerProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [pathHistory, setPathHistory] = useState<string[]>([basePath]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { t } = useTranslation();
   const [isShowingCached, setIsShowingCached] = useState(() => {
     // Check if we're showing cached data on mount
     if (searchQuery.trim()) {
@@ -402,7 +404,7 @@ export const FilePicker: React.FC<FilePickerProps> = ({
         {/* Show loading only if no cached data */}
         {isLoading && displayEntries.length === 0 && (
           <div className="flex items-center justify-center h-full">
-            <span className="text-sm text-muted-foreground">Loading...</span>
+            <span className="text-sm text-muted-foreground">{t('common.loading')}</span>
           </div>
         )}
 
@@ -423,7 +425,7 @@ export const FilePicker: React.FC<FilePickerProps> = ({
           <div className="flex flex-col items-center justify-center h-full">
             <Search className="h-8 w-8 text-muted-foreground mb-2" />
             <span className="text-sm text-muted-foreground">
-              {searchQuery.trim() ? 'No files found' : 'Empty directory'}
+              {searchQuery.trim() ? t('common.noFilesFound') : t('common.emptyDirectory')}
             </span>
           </div>
         )}
@@ -489,4 +491,4 @@ export const FilePicker: React.FC<FilePickerProps> = ({
       </div>
     </motion.div>
   );
-}; 
+};

@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Toast, ToastContainer } from "@/components/ui/toast";
 import { api, type MCPServer } from "@/lib/api";
+import { useTranslation } from "react-i18next";
 import { MCPServerList } from "./MCPServerList";
 import { MCPAddServer } from "./MCPAddServer";
 import { MCPImportExport } from "./MCPImportExport";
@@ -27,6 +28,7 @@ interface MCPManagerProps {
 export const MCPManager: React.FC<MCPManagerProps> = ({
   className: _className,
 }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("servers");
   const [servers, setServers] = useState<MCPServer[]>([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +103,7 @@ export const MCPManager: React.FC<MCPManagerProps> = ({
         <div className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-heading-1">MCP Servers</h1>
+              <h1 className="text-heading-1">{t('navigation.mcp_servers')}</h1>
               <p className="mt-1 text-body-small text-muted-foreground">
                 Manage Model Context Protocol servers
               </p>
@@ -192,4 +194,4 @@ export const MCPManager: React.FC<MCPManagerProps> = ({
       </ToastContainer>
     </div>
   );
-}; 
+};

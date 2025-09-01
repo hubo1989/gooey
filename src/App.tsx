@@ -70,13 +70,19 @@ function AppContent() {
   const trackEvent = useTrackEvent();
   
   // 监听语言变化并强制重新渲染
-  const [languageVersion, setLanguageVersion] = useState(0);
+  const { i18n } = useTranslation();
+  
   useEffect(() => {
     const handleLanguageChange = () => {
-      setLanguageVersion(v => v + 1);
+      // 语言变化处理逻辑
+    };
+    
+    const handleShowToast = (event: CustomEvent) => {
+      setToast({ message: event.detail.message, type: event.detail.type });
     };
     
     window.addEventListener('language-changed', handleLanguageChange);
+    window.addEventListener('show-toast', handleShowToast as EventListener);
     
     // 初始化时检查并应用保存的语言偏好
     const savedLanguage = localStorage.getItem('i18nextLng') || localStorage.getItem('preferred_language');
@@ -84,7 +90,10 @@ function AppContent() {
       i18n.changeLanguage(savedLanguage);
     }
     
-    return () => window.removeEventListener('language-changed', handleLanguageChange);
+    return () => {
+      window.removeEventListener('language-changed', handleLanguageChange);
+      window.removeEventListener('show-toast', handleShowToast as EventListener);
+    };
   }, [i18n]);
   
   // Track user journey milestones
@@ -244,7 +253,7 @@ function AppContent() {
   /**
    * Handles navigating to hooks configuration
    */
-  // Project settings navigation handled via `projectForSettings` state when needed
+  // Project settings navigation handled via {t('common.projectforsettings')} state when needed
 
 
   const renderContent = () => {

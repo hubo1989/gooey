@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Popover } from "@/components/ui/popover";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { api, type ClaudeVersionStatus } from "@/lib/api";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 interface TopbarProps {
@@ -53,6 +54,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   onSettingsClick,
   className,
 }) => {
+  const { t } = useTranslation();
   const [versionStatus, setVersionStatus] = useState<ClaudeVersionStatus | null>(null);
   const [checking, setChecking] = useState(true);
   
@@ -88,7 +90,7 @@ export const Topbar: React.FC<TopbarProps> = ({
       return (
         <div className="flex items-center space-x-2 text-xs">
           <Circle className="h-3 w-3 animate-pulse text-muted-foreground" />
-          <span className="text-muted-foreground">Checking...</span>
+          <span className="text-muted-foreground">{t('common.checking')}</span>
         </div>
       );
     }
@@ -126,7 +128,7 @@ export const Topbar: React.FC<TopbarProps> = ({
           trigger={statusContent}
           content={
             <div className="space-y-3 max-w-xs">
-              <p className="text-sm font-medium">Claude Code not found</p>
+              <p className="text-sm font-medium">{t('common.claude_code_not_found')}</p>
               <div className="rounded-md bg-muted p-3">
                 <pre className="text-xs font-mono whitespace-pre-wrap">
                   {versionStatus.output}
@@ -146,7 +148,7 @@ export const Topbar: React.FC<TopbarProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center space-x-1 text-xs text-primary hover:underline"
               >
-                <span>Install Claude Code</span>
+                <span>{t('common.install_claude_code')}</span>
                 <ExternalLink className="h-3 w-3" />
               </a>
             </div>
@@ -176,4 +178,4 @@ export const Topbar: React.FC<TopbarProps> = ({
       <LanguageSwitcher />
     </motion.div>
   );
-}; 
+};

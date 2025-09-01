@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { SelectComponent, type SelectOption } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { api, type CheckpointStrategy } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -49,6 +50,7 @@ export const CheckpointSettings: React.FC<CheckpointSettingsProps> = ({
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const strategyOptions: SelectOption[] = [
     { value: "manual", label: "Manual Only" },

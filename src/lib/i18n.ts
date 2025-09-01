@@ -3,6 +3,13 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
+// 扩展Window接口以包含i18n
+declare global {
+  interface Window {
+    i18n: typeof i18n;
+  }
+}
+
 // 动态加载翻译资源
 export const i18nInitPromise = i18n
   .use(Backend)
@@ -15,7 +22,7 @@ export const i18nInitPromise = i18n
       escapeValue: false
     },
     backend: {
-      loadPath: './src/locales/{{lng}}/translation.json'
+      loadPath: '/src/locales/{{lng}}/translation.json'
     },
     // 配置语言检测器，降低优先级，允许手动设置覆盖
     detection: {
@@ -26,5 +33,10 @@ export const i18nInitPromise = i18n
     // 支持的语言列表
     supportedLngs: ['en', 'zh-CN', 'zh-TW', 'ja', 'ko', 'de', 'fr', 'es', 'it', 'pt', 'ru']
   });
+
+// 将i18n暴露到全局window对象
+if (typeof window !== 'undefined') {
+  window.i18n = i18n;
+}
 
 export default i18n;

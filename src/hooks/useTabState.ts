@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useTabContext } from '@/contexts/TabContext';
 import { Tab } from '@/contexts/TabContext';
+import { useTranslation } from 'react-i18next';
 
 interface UseTabStateReturn {
   // State
@@ -51,6 +52,7 @@ export const useTabState = (): UseTabStateReturn => {
     getTabById,
     getTabsByType
   } = useTabContext();
+  const { t } = useTranslation();
 
   const activeTab = useMemo(() => 
     activeTabId ? getTabById(activeTabId) : undefined,
@@ -96,12 +98,12 @@ export const useTabState = (): UseTabStateReturn => {
     // Allow multiple projects tabs
     return addTab({
       type: 'projects',
-      title: 'Projects',
+      title: t('tab_types.projects'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'folder'
     });
-  }, [addTab]);
+  }, [addTab, t]);
 
   const createAgentsTab = useCallback((): string | null => {
     // Check if agents tab already exists (singleton)
@@ -113,12 +115,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'agents',
-      title: 'Agents',
+      title: t('tab_types.agents'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'bot'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const createUsageTab = useCallback((): string | null => {
     // Check if usage tab already exists (singleton)
@@ -130,12 +132,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'usage',
-      title: 'Usage',
+      title: t('tab_types.usage'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'bar-chart'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const createMCPTab = useCallback((): string | null => {
     // Check if MCP tab already exists (singleton)
@@ -147,12 +149,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'mcp',
-      title: 'MCP Servers',
+      title: t('tab_types.mcp'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'server'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const createSettingsTab = useCallback((): string | null => {
     // Check if settings tab already exists (singleton)
@@ -164,12 +166,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'settings',
-      title: 'Settings',
+      title: t('tab_types.settings'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'settings'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const createClaudeMdTab = useCallback((): string | null => {
     // Check if claude-md tab already exists (singleton)
@@ -181,12 +183,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'claude-md',
-      title: 'CLAUDE.md',
+      title: t('tab_types.claude_md'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'file-text'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const createClaudeFileTab = useCallback((fileId: string, fileName: string): string => {
     // Check if tab already exists for this file
@@ -228,12 +230,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'create-agent',
-      title: 'Create Agent',
+      title: t('tab_types.create_agent'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'plus'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const createImportAgentTab = useCallback((): string => {
     // Check if import agent tab already exists (singleton)
@@ -245,12 +247,12 @@ export const useTabState = (): UseTabStateReturn => {
 
     return addTab({
       type: 'import-agent',
-      title: 'Import Agent',
+      title: t('tab_types.import_agent'),
       status: 'idle',
       hasUnsavedChanges: false,
       icon: 'import'
     });
-  }, [addTab, tabs, setActiveTab]);
+  }, [addTab, tabs, setActiveTab, t]);
 
   const closeTab = useCallback(async (id: string, force: boolean = false): Promise<boolean> => {
     const tab = getTabById(id);
@@ -259,7 +261,7 @@ export const useTabState = (): UseTabStateReturn => {
     // Check for unsaved changes
     if (!force && tab.hasUnsavedChanges) {
       // In a real implementation, you'd show a confirmation dialog here
-      const confirmed = window.confirm(`Tab "${tab.title}" has unsaved changes. Close anyway?`);
+      const confirmed = window.confirm(t('tab_status.close_confirmation', { title: tab.title }));
       if (!confirmed) return false;
     }
 

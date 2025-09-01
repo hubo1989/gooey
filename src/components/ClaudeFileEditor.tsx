@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import MDEditor from "@uiw/react-md-editor";
 import { motion } from "framer-motion";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
@@ -36,6 +37,7 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
   onBack,
   className,
 }) => {
+  const { t } = useTranslation();
   const [content, setContent] = useState<string>("");
   const [originalContent, setOriginalContent] = useState<string>("");
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,7 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
       setOriginalContent(fileContent);
     } catch (err) {
       console.error("Failed to load file:", err);
-      setError("Failed to load CLAUDE.md file");
+      setError(t("errors.failedToLoadFile"));
     } finally {
       setLoading(false);
     }
@@ -72,11 +74,11 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
       setToast(null);
       await api.saveClaudeMdFile(file.absolute_path, content);
       setOriginalContent(content);
-      setToast({ message: "File saved successfully", type: "success" });
+      setToast({ message: t("common.fileSaved"), type: "success" });
     } catch (err) {
       console.error("Failed to save file:", err);
-      setError("Failed to save CLAUDE.md file");
-      setToast({ message: "Failed to save file", type: "error" });
+      setError(t("errors.failedToSaveFile"));
+      setToast({ message: t("errors.failedToSaveFile"), type: "error" });
     } finally {
       setSaving(false);
     }
@@ -85,7 +87,7 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
   const handleBack = () => {
     if (hasChanges) {
       const confirmLeave = window.confirm(
-        "You have unsaved changes. Are you sure you want to leave?"
+        t("common.unsavedChangesWarning")
       );
       if (!confirmLeave) return;
     }
@@ -114,7 +116,7 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
             <div className="min-w-0 flex-1">
               <h2 className="text-lg font-semibold truncate">{file.relative_path}</h2>
               <p className="text-xs text-muted-foreground">
-                Edit project-specific Claude Code system prompt
+                {t("editor.editClaudePrompt")}
               </p>
             </div>
           </div>
@@ -129,7 +131,7 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            {saving ? "Saving..." : "Save"}
+            {saving ? t("common.saving") : t("common.save")}
           </Button>
         </motion.div>
         
@@ -176,4 +178,4 @@ export const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
       </ToastContainer>
     </div>
   );
-}; 
+};

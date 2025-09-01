@@ -14,7 +14,12 @@
     "i18n:sync": "npx languine@latest sync",
     "i18n:translate": "npx languine@latest translate",
     "i18n:all": "npm run i18n:extract && npm run i18n:sync && npm run i18n:translate",
-    "i18n:check": "npm run i18n:extract && npm run check"
+    "i18n:check": "npm run i18n:extract && npm run check",
+    "test:i18n": "playwright test tests/i18n-test-main.spec.ts",
+    "test:i18n:components": "playwright test tests/i18n-component-tests.spec.ts",
+    "test:i18n:ui": "playwright test tests/i18n-test-main.spec.ts --ui",
+    "test:i18n:report": "playwright test tests/i18n-test-main.spec.ts --reporter=html",
+    "test:i18n:all": "npm run test:i18n && npm run test:i18n:components"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -66,6 +71,7 @@
   },
   "devDependencies": {
     "@languine/cli": "^0.5.2",
+    "@playwright/test": "^1.55.0",
     "@tauri-apps/cli": "^2.7.1",
     "@types/node": "^22.15.30",
     "@types/react": "^18.3.1",
