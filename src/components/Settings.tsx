@@ -242,11 +242,11 @@ export const Settings: React.FC<SettingsProps> = ({
         setProxySettingsChanged(false);
       }
 
-      setToast({ message: "Settings saved successfully!", type: "success" });
+      setToast({ message: t("settings.saved_successfully"), type: "success" });
     } catch (err) {
       console.error("Failed to save settings:", err);
       setError("Failed to save settings.");
-      setToast({ message: "Failed to save settings", type: "error" });
+      setToast({ message: t("settings.failed_to_save"), type: "error" });
     } finally {
       setSaving(false);
     }
@@ -666,7 +666,7 @@ export const Settings: React.FC<SettingsProps> = ({
                       <div className="space-y-1">
                         <Label htmlFor="analytics-enabled">{t('settings.enableAnalytics')}</Label>
                         <p className="text-caption text-muted-foreground">
-                          {t('settings.helpImproveGooey')}
+                          {t('settings.helpImproveopcode')}
                         </p>
                       </div>
                       <Switch
@@ -865,11 +865,11 @@ export const Settings: React.FC<SettingsProps> = ({
                       <strong>{t('common.examples')}</strong>
                     </p>
                     <ul className="text-caption text-muted-foreground space-y-1 ml-4">
-                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.bash')}</code> - Allow all bash commands</li>
-                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.bashnpm_run_build')}</code> - Allow exact command</li>
-                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.bashnpm_run_test')}</code> - Allow commands with prefix</li>
-                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.readzshrc')}</code> - Allow reading specific file</li>
-                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.editdocs')}</code> - Allow editing files in docs directory</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.bash')}</code> - {t('settings.allow_bash_commands')}</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.bashnpm_run_build')}</code> - {t('settings.allow_exact_command')}</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.bashnpm_run_test')}</code> - {t('settings.allow_commands_with_prefix')}</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.readzshrc')}</code> - {t('settings.allow_reading_specific_file')}</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400">{t('common.editdocs')}</code> - {t('settings.allow_editing_docs_directory')}</li>
                     </ul>
                   </div>
                 </div>
@@ -936,9 +936,9 @@ export const Settings: React.FC<SettingsProps> = ({
                       <strong>{t('common.common_variables')}</strong>
                     </p>
                     <ul className="text-caption text-muted-foreground space-y-1 ml-4">
-                      <li>• <code className="px-1 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">CLAUDE_CODE_ENABLE_TELEMETRY</code> - Enable/disable telemetry (0 or 1)</li>
-                      <li>• <code className="px-1 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">ANTHROPIC_MODEL</code> - Custom model name</li>
-                      <li>• <code className="px-1 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">DISABLE_COST_WARNINGS</code> - Disable cost warnings (1)</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">CLAUDE_CODE_ENABLE_TELEMETRY</code> - {t('settings.enable_disable_telemetry')}</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">ANTHROPIC_MODEL</code> - {t('settings.custom_model_name')}</li>
+                      <li>• <code className="px-1 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">DISABLE_COST_WARNINGS</code> - {t('settings.disable_cost_warnings')}</li>
                     </ul>
                   </div>
                 </div>
@@ -955,23 +955,23 @@ export const Settings: React.FC<SettingsProps> = ({
                   
                   {/* API Key Helper */}
                   <div className="space-y-2">
-                    <Label htmlFor="apiKeyHelper">API Key Helper Script</Label>
+                    <Label htmlFor="apiKeyHelper">{t('settings.api_key_helper_label')}</Label>
                     <Input
                       id="apiKeyHelper"
                       placeholder={t('settings.api_key_helper_placeholder')}
                       value={settings?.apiKeyHelper || ""}
                       onChange={(e) => updateSetting("apiKeyHelper", e.target.value || undefined)}
                     />
-                    <p className="text-xs text-muted-foreground">{t('common.custom_script_api')}</p>
+                    <p className="text-xs text-muted-foreground">{t('settings.api_key_helper_description')}</p>
                   </div>
                   
                   {/* Raw JSON Editor */}
                   <div className="space-y-2">
-                    <Label>{t('navigation.raw_settings_json')}</Label>
+                    <Label>{t('settings.raw_settings_json_label')}</Label>
                     <div className="p-3 rounded-md bg-muted font-mono text-xs overflow-x-auto whitespace-pre-wrap">
                       <pre>{JSON.stringify(settings, null, 2)}</pre>
                     </div>
-                    <p className="text-xs text-muted-foreground">{t('common.raw_json_explanation')}</p>
+                    <p className="text-xs text-muted-foreground">{t('settings.raw_settings_json_description')}</p>
                   </div>
                 </div>
               </Card>
@@ -984,8 +984,7 @@ export const Settings: React.FC<SettingsProps> = ({
                   <div>
                     <h3 className="text-base font-semibold mb-2">{t('common.user_hooks')}</h3>
                     <p className="text-body-small text-muted-foreground mb-4">
-                      Configure hooks that apply to all Claude Code sessions for your user account.
-                      These are stored in <code className="mx-1 px-2 py-1 bg-muted rounded text-xs">{t('navigation.claudesettingsjson')}</code>
+                      {t('settings.user_hooks_description')}
                     </p>
                   </div>
                   

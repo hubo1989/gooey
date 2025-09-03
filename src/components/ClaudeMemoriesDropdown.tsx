@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Edit2, FileText, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -36,6 +37,7 @@ export const ClaudeMemoriesDropdown: React.FC<ClaudeMemoriesDropdownProps> = ({
   onEditFile,
   className,
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [files, setFiles] = useState<ClaudeMdFile[]>([]);
   const [loading, setLoading] = useState(false);
@@ -56,7 +58,7 @@ export const ClaudeMemoriesDropdown: React.FC<ClaudeMemoriesDropdownProps> = ({
       setFiles(foundFiles);
     } catch (err) {
       console.error("Failed to load CLAUDE.md files:", err);
-      setError("Failed to load CLAUDE.md files");
+      setError(t("claude_memories_dropdown.no_files"));
     } finally {
       setLoading(false);
     }
@@ -78,7 +80,7 @@ export const ClaudeMemoriesDropdown: React.FC<ClaudeMemoriesDropdownProps> = ({
         >
           <div className="flex items-center space-x-2">
             <FileText className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">CLAUDE.md Memories</span>
+            <span className="text-sm font-medium">{t("claude_memories_dropdown.title")}</span>
             {files.length > 0 && !loading && (
               <span className="text-xs text-muted-foreground">({files.length})</span>
             )}
@@ -110,7 +112,7 @@ export const ClaudeMemoriesDropdown: React.FC<ClaudeMemoriesDropdownProps> = ({
                   <div className="p-3 text-xs text-destructive">{error}</div>
                 ) : files.length === 0 ? (
                   <div className="p-3 text-xs text-muted-foreground text-center">
-                    No CLAUDE.md files found in this project
+                    {t("claude_memories_dropdown.no_files")}
                   </div>
                 ) : (
                   <div className="max-h-64 overflow-y-auto">
@@ -129,7 +131,7 @@ export const ClaudeMemoriesDropdown: React.FC<ClaudeMemoriesDropdownProps> = ({
                               {formatFileSize(file.size)}
                             </span>
                             <span className="text-xs text-muted-foreground">
-                              Modified {formatUnixTimestamp(file.modified)}
+                              {t("claude_memories_dropdown.modified")} {formatUnixTimestamp(file.modified)}
                             </span>
                           </div>
                         </div>

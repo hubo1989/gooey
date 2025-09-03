@@ -207,7 +207,7 @@ export const CreateAgent: React.FC<CreateAgentProps> = ({
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g., Code Assistant"
+                    placeholder={t('common.example_code_assistant')}
                     required
                     className="h-9"
                   />
@@ -300,7 +300,7 @@ export const CreateAgent: React.FC<CreateAgentProps> = ({
                 <Input
                   id="default-task"
                   type="text"
-                  placeholder="e.g., Review this code for security issues"
+                  placeholder={t('common.example_review_code')}
                   value={defaultTask}
                   onChange={(e) => setDefaultTask(e.target.value)}
                   className="h-9"

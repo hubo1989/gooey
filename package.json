@@ -7,9 +7,11 @@
   "scripts": {
     "dev": "vite",
     "dev:port": "VITE_PORT=$PORT vite",
+    "dev:tauri": "VITE_PORT=1421 vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
+    "tauri:dev": "tauri dev",
     "build:dmg": "tauri build --bundles dmg",
     "check": "tsc --noEmit && cd src-tauri && cargo check",
     "i18n:extract": "i18next-scanner --config i18next-scanner.config.cjs",
@@ -21,7 +23,10 @@
     "test:i18n:components": "playwright test tests/i18n-component-tests.spec.ts",
     "test:i18n:ui": "playwright test tests/i18n-test-main.spec.ts --ui",
     "test:i18n:report": "playwright test tests/i18n-test-main.spec.ts --reporter=html",
-    "test:i18n:all": "npm run test:i18n && npm run test:i18n:components"
+    "test:i18n:all": "npm run test:i18n && npm run test:i18n:components",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "PWDEBUG=1 playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

@@ -69,7 +69,7 @@ npm run i18n:all
 1. **Topbar.tsx** - 导航文本
 2. **Settings.tsx** - 设置界面文本  
 3. **CheckpointSettings.tsx** - 检查点设置
-4. **Agents.tsx** - 代理管理
+4. **Agents.tsx** - 智能体管理
 
 #### 替换示例：
 ```jsx

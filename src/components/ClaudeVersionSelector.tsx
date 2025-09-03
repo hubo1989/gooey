@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
@@ -49,19 +50,20 @@ interface ClaudeVersionSelectorProps {
  *   onSelect={(installation) => setSelectedInstallation(installation)}
  * />
  */
-export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
+export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({ 
   selectedPath,
   onSelect,
   className,
-  showSaveButton = false,
+  showSaveButton,
   onSave,
-  isSaving = false,
-  simplified = false,
+  isSaving,
+  simplified
 }) => {
+  const { t } = useTranslation();
   const [installations, setInstallations] = useState<ClaudeInstallation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedInstallation, setSelectedInstallation] = useState<ClaudeInstallation | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadInstallations();
@@ -79,7 +81,7 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
 
   const loadInstallations = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       setError(null);
       const foundInstallations = await api.listClaudeInstallations();
       setInstallations(foundInstallations);
@@ -99,7 +101,7 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
       console.error("Failed to load Claude installations:", err);
       setError(err instanceof Error ? err.message : "Failed to load Claude installations");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -133,7 +135,7 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     if (simplified) {
       return (
         <div className="space-y-2">
@@ -198,9 +200,9 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
       <div className={cn("space-y-3", className)}>
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
-            <Label htmlFor="claude-installation" className="text-sm font-medium">Claude Installation</Label>
+            <Label htmlFor="claude-installation" className="text-sm font-medium">{t('common.claude_installation')}</Label>
             <p className="text-xs text-muted-foreground">
-              Select which version of Claude to use
+              {t('common.select_claude_version')}
             </p>
           </div>
           {selectedInstallation && (
@@ -212,7 +214,7 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
         
         <Select value={selectedInstallation?.path || ""} onValueChange={handleInstallationChange}>
           <SelectTrigger id="claude-installation" className="w-full">
-            <SelectValue placeholder="Choose Claude installation">
+            <SelectValue placeholder={t('common.choose_claude_installation')}>
               {selectedInstallation && (
                 <div className="flex items-center gap-2">
                   <Terminal className="h-3.5 w-3.5 text-muted-foreground" />
@@ -284,7 +286,7 @@ export const ClaudeVersionSelector: React.FC<ClaudeVersionSelectorProps> = ({
           <Label className="text-sm font-medium">Available Installations</Label>
           <Select value={selectedInstallation?.path || ""} onValueChange={handleInstallationChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Select Claude installation">
+              <SelectValue placeholder={t('common.select_claude_installation')}>
                 {selectedInstallation && (
                   <div className="flex items-center gap-2">
                     {getInstallationIcon(selectedInstallation)}

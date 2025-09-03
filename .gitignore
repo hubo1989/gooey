@@ -32,8 +32,18 @@ temp_lib/
 AGENTS.md
 CLAUDE.md
 *_TASK.md
+QWEN.md
+IFLOW.md
+
+
 
 # Claude project-specific files
 .claude/
 .trae/
 .env*
+todo/
+temp/
+.history-memo/
+.iflow/
+.rules/
+.spec-workflow/

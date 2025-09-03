@@ -129,11 +129,11 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
           onError(result.message);
         }
       } else {
-        onError("Unrecognized JSON format. Expected MCP server configuration.");
+        onError(t("mcp.unrecognized_json_format"));
       }
     } catch (error) {
       console.error("Failed to import JSON:", error);
-      onError("Failed to import JSON file");
+      onError(t("mcp.failed_to_import_json"));
     } finally {
       setImportingJson(false);
       // Reset the input
@@ -146,7 +146,7 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
    */
   const handleExport = () => {
     // TODO: Implement export functionality
-    onError("Export functionality coming soon!");
+    onError(t("mcp.export_coming_soon"));
   };
 
   /**
@@ -183,13 +183,13 @@ export const MCPImportExport: React.FC<MCPImportExportProps> = ({
               value={importScope}
               onValueChange={(value: string) => setImportScope(value)}
               options={[
-                { value: "local", label: "Local (this project only)" },
-                { value: "project", label: "Project (shared via .mcp.json)" },
-                { value: "user", label: "User (all projects)" },
+                { value: "local", label: t("mcp.local_scope") },
+                { value: "project", label: t("mcp.project_scope") },
+                { value: "user", label: t("mcp.user_scope") },
               ]}
             />
             <p className="text-xs text-muted-foreground">
-              Choose where to save imported servers from JSON files
+              {t('mcp.import_scope_description')}
             </p>
           </div>
         </Card>

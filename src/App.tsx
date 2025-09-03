@@ -49,7 +49,7 @@ type View =
 function AppContent() {
   const [view, setView] = useState<View>("tabs");
   const { createClaudeMdTab, createSettingsTab, createUsageTab, createMCPTab, createAgentsTab } = useTabState();
-  const { t } = useTranslation();
+  const { t, ready } = useTranslation();
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -256,6 +256,24 @@ function AppContent() {
 
 
   const renderContent = () => {
+    // 如果 i18n 还没有准备好，显示加载状态
+    if (!ready) {
+      return (
+        <div className="flex items-center justify-center h-full">
+          <div className="text-lg">Loading translations...</div>
+        </div>
+      );
+    }
+
+    // 如果初始化出错，显示错误信息
+    if (_error) {
+      return (
+        <div className="flex items-center justify-center h-full">
+          <div className="text-lg text-red-500">Failed to load: {_error}</div>
+        </div>
+      );
+    }
+
     switch (view) {
       case "welcome":
         return (

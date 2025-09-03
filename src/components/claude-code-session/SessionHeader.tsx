@@ -10,6 +10,7 @@ import {
   Hash,
   Command
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Popover } from '@/components/ui/popover';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -51,6 +52,8 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
   onSlashCommandsSettings,
   setCopyPopoverOpen
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <motion.div 
       initial={{ opacity: 0, y: -20 }}
@@ -70,7 +73,7 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
           
           <div className="flex items-center gap-2">
             <Terminal className="h-5 w-5 text-primary" />
-            <span className="font-semibold">Claude Code Session</span>
+            <span className="font-semibold">{t("session_header.title")}</span>
           </div>
 
           
@@ -82,7 +85,7 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
               className="flex items-center gap-2"
             >
               <FolderOpen className="h-4 w-4" />
-              Select Project
+              {t("session_header.select_project")}
             </Button>
           )}
         </div>
@@ -96,7 +99,7 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
               </Badge>
               {totalTokens > 0 && (
                 <Badge variant="secondary" className="text-xs">
-                  {totalTokens.toLocaleString()} tokens
+                  {totalTokens.toLocaleString()} {t("timeline.tokens")}
                 </Badge>
               )}
             </div>
@@ -119,7 +122,7 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
                     className="w-full justify-start"
                     onClick={onCopyAsJsonl}
                   >
-                    Copy as JSONL
+                    {t("agentexecution.copy_as_jsonl")}
                   </Button>
                   <Button
                     variant="ghost"
@@ -127,7 +130,7 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
                     className="w-full justify-start"
                     onClick={onCopyAsMarkdown}
                   >
-                    Copy as Markdown
+                    {t("agentexecution.copy_as_markdown")}
                   </Button>
                 </div>
               }
@@ -157,13 +160,13 @@ export const SessionHeader: React.FC<SessionHeaderProps> = React.memo(({
               {onProjectSettings && projectPath && (
                 <DropdownMenuItem onClick={onProjectSettings}>
                   <Settings className="h-4 w-4 mr-2" />
-                  Project Settings
+                  {t("session_header.project_settings")}
                 </DropdownMenuItem>
               )}
               {onSlashCommandsSettings && projectPath && (
                 <DropdownMenuItem onClick={onSlashCommandsSettings}>
                   <Command className="h-4 w-4 mr-2" />
-                  Slash Commands
+                  {t("session_header.slash_commands")}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

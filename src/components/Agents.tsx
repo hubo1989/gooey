@@ -140,7 +140,7 @@ export const Agents: React.FC = () => {
       }
     } catch (error) {
       console.error('Failed to import agent:', error);
-      setToast({ message: 'Failed to import agent', type: 'error' });
+      setToast({ message: t('agents.import_failed'), type: 'error' });
     }
   };
 
@@ -210,7 +210,7 @@ export const Agents: React.FC = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
                     <Import className="w-4 h-4 mr-2" />
-                    Import
+                    {t('buttons.import')}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -282,7 +282,7 @@ export const Agents: React.FC = () => {
             >
               <h3 className="text-lg font-semibold mb-4">{t('agents.delete_agent')}</h3>
               <p className="text-muted-foreground mb-6">
-                Are you sure you want to delete "{agentToDelete.name}"? This action cannot be undone.
+                {t('agents.delete_confirmation', { name: agentToDelete.name })}
               </p>
               <div className="flex gap-3 justify-end">
                 <Button
@@ -307,11 +307,11 @@ export const Agents: React.FC = () => {
             <TabsList className="grid grid-cols-2 w-full max-w-md mb-6 h-auto p-1">
               <TabsTrigger value="agents" className="py-2.5 px-3">
                 <Bot className="w-4 h-4 mr-2" />
-                Agents ({agents.length})
+                {t('agents.agents')} ({agents.length})
               </TabsTrigger>
               <TabsTrigger value="running" className="py-2.5 px-3">
                 <History className="w-4 h-4 mr-2" />
-                History ({runningAgents.length})
+                {t('agents.running_agents')} ({runningAgents.length})
               </TabsTrigger>
             </TabsList>
 
@@ -402,7 +402,7 @@ export const Agents: React.FC = () => {
                     <History className="w-12 h-12 text-muted-foreground mb-4" />
                     <h3 className="text-lg font-semibold mb-2">{t('agents.no_agent_history')}</h3>
                     <p className="text-muted-foreground">
-                      Run an agent to see it here
+                      {t('agents.no_running_agents_description')}
                     </p>
                   </div>
                 </Card>

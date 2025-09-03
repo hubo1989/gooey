@@ -1,44 +1,3 @@
-# iflow.md
-
-This file provides guidance to (iflow/code) when working with code in this repository.
-
-# CLAUDE.md
-
-This file provides guidance to iflow (iflow/code) when working with code in this repository.
-
-## AI Guidance
-
-* Ignore GEMINI.md and GEMINI-*.md files
-* To save main context space, for code searches, inspections, troubleshooting or analysis, use code-searcher subagent where appropriate - giving the subagent full context background for the task(s) you assign it.
-* After receiving tool results, carefully reflect on their quality and determine optimal next steps before proceeding. Use your thinking to plan and iterate based on this new information, and then take the best next action.
-* For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
-* Before you finish, please verify your solution
-* Do what has been asked; nothing more, nothing less.
-* NEVER create files unless they're absolutely necessary for achieving your goal.
-* ALWAYS prefer editing an existing file to creating a new one.
-* NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
-* When you update or modify core context files, also update markdown documentation and memory bank
-* When asked to commit changes, exclude CLAUDE.md and CLAUDE-*.md referenced memory bank system files from any commits. Never delete these files.
-
-## Memory Bank System
-
-This project uses a structured memory bank system with specialized context files. Always check these files for relevant information before starting work:
-
-### Core Context Files
-
-* **CLAUDE-activeContext.md** - Current session state, goals, and progress (if exists)
-* **CLAUDE-patterns.md** - Established code patterns and conventions (if exists)
-* **CLAUDE-decisions.md** - Architecture decisions and rationale (if exists)
-* **CLAUDE-troubleshooting.md** - Common issues and proven solutions (if exists)
-* **CLAUDE-config-variables.md** - Configuration variables reference (if exists)
-* **CLAUDE-temp.md** - Temporary scratch pad (only read when referenced)
-
-**Important:** Always reference the active context file first to understand what's currently being worked on and maintain session continuity.
-
-### Memory Bank System Backups
-
-When asked to backup Memory Bank System files, you will copy the core context files above and @.claude settings directory to directory @/path/to/backup-directory. If files already exist in the backup directory, you will overwrite them.
-
 ## Project Overview
 
 This file provides guidance to iflow (iflow/code) when working with code in this repository.
@@ -47,11 +6,11 @@ This file provides guidance to iflow (iflow/code) when working with code in this
 
 ## Project Overview
 
-Gooey is a desktop GUI application and toolkit for iflow built with Tauri 2. It provides a visual interface for managing iflow projects, sessions, custom agents, usage analytics, MCP servers, and checkpoint management.My forked is for the purpose of supporting multilingual display.
+opcode is a desktop GUI application and toolkit for iflow built with Tauri 2. It provides a visual interface for managing iflow projects, sessions, custom agents, usage analytics, MCP servers, and checkpoint management.My forked is for the purpose of supporting multilingual display.
 
 ## 项目概述 (Project Overview)
 
-Gooey是一个基于Tauri 2构建的桌面GUI应用程序和工具包，专为iflow设计。它提供了一个可视化界面，用于管理iflow项目、会话、自定义代理、使用分析、MCP服务器和检查点管理。我的这个副本是为了支持多语言展示。
+opcode是一个基于Tauri 2构建的桌面GUI应用程序和工具包，专为iflow设计。它提供了一个可视化界面，用于管理iflow项目、会话、自定义智能体、使用分析、MCP服务器和检查点管理。我的这个副本是为了支持多语言展示。
 
 ## Tech Stack
 
@@ -216,15 +175,15 @@ Communication between frontend and backend happens through Tauri's invoke system
 
 - **commands/**: 包含按功能组织的所有Tauri命令处理器：
 
-  - `agents.rs`: 自定义代理管理和执行
+  - `agents.rs`: 自定义智能体管理和执行
   - `claude.rs`: iflow会话和项目管理
   - `mcp.rs`: 模型上下文协议服务器管理
   - `usage.rs`: 使用分析和统计
   - `storage.rs`: 数据库操作和管理
-  - `proxy.rs`: 代理配置管理
+  - `proxy.rs`: 智能体配置管理
   - `slash_commands.rs`: 自定义斜杠命令管理
 - **checkpoint/**: 检查点和时间线管理，用于会话版本控制
-- **process/**: 进程注册表，用于管理运行的iflow和代理会话
+- **process/**: 进程注册表，用于管理运行的iflow和智能体会话
 - **claude_binary.rs**: iflow二进制检测和管理
 
 ### Key Frontend Components
@@ -238,7 +197,7 @@ Communication between frontend and backend happens through Tauri's invoke system
 
 ### 关键前端组件 (Key Frontend Components)
 
-- **代理管理 (Agent Management)**: 用于创建、编辑和运行自定义代理的组件
+- **智能体管理 (Agent Management)**: 用于创建、编辑和运行自定义智能体的组件
 - **项目浏览器 (Project Browser)**: 用于浏览iflow项目和会话的UI
 - **检查点时间线 (Checkpoint Timeline)**: 用于会话版本控制和恢复的可视化时间线
 - **使用仪表板 (Usage Dashboard)**: 用于跟踪iflow使用情况的分析仪表板
@@ -260,9 +219,9 @@ The application uses SQLite for data persistence with multiple tables:
 
 应用程序使用SQLite进行数据持久化，包含多个表：
 
-- 代理配置和运行记录
+- 智能体配置和运行记录
 - 会话历史和检查点
-- 使用统计
+- 使用情况
 - MCP服务器配置
 - 应用程序设置
 - 斜杠命令定义
@@ -279,7 +238,7 @@ The application uses SQLite for data persistence with multiple tables:
 ## 关键功能 (Key Features)
 
 1. **项目和会话管理 (Project & Session Management)**: 可视化浏览iflow项目和会话
-2. **CC代理 (CC Agents)**: 具有后台执行能力的自定义AI代理
+2. **CC智能体 (CC Agents)**: 具有后台执行能力的自定义AI智能体
 3. **使用分析 (Usage Analytics)**: 成本跟踪和令牌使用可视化
 4. **MCP服务器管理 (MCP Server Management)**: 模型上下文协议服务器配置
 5. **时间线和检查点 (Timeline & Checkpoints)**: 具有分支时间线的会话版本控制
@@ -294,8 +253,8 @@ The application uses SQLite for data persistence with multiple tables:
 
 ## 安全模型 (Security Model)
 
-- 代理的进程隔离
-- 每个代理的权限控制
+- 智能体的进程隔离
+- 每个智能体的权限控制
 - 仅本地数据存储
 - 无遥测或数据收集
 
@@ -344,11 +303,11 @@ This file provides guidance to iflow (iflow/code) when working with code in this
 
 ## Project Overview
 
-Gooey is a desktop GUI application and toolkit for iflow built with Tauri 2. It provides a visual interface for managing iflow projects, sessions, custom agents, usage analytics, MCP servers, and checkpoint management.My forked is for the purpose of supporting multilingual display.
+opcode is a desktop GUI application and toolkit for iflow built with Tauri 2. It provides a visual interface for managing iflow projects, sessions, custom agents, usage analytics, MCP servers, and checkpoint management.My forked is for the purpose of supporting multilingual display.
 
 ## 项目概述 (Project Overview)
 
-Gooey是一个基于Tauri 2构建的桌面GUI应用程序和工具包，专为iflow设计。它提供了一个可视化界面，用于管理iflow项目、会话、自定义代理、使用分析、MCP服务器和检查点管理。我的这个副本是为了支持多语言展示。
+opcode是一个基于Tauri 2构建的桌面GUI应用程序和工具包，专为iflow设计。它提供了一个可视化界面，用于管理iflow项目、会话、自定义智能体、使用分析、MCP服务器和检查点管理。我的这个副本是为了支持多语言展示。
 
 ## Tech Stack
 
@@ -513,15 +472,15 @@ Communication between frontend and backend happens through Tauri's invoke system
 
 - **commands/**: 包含按功能组织的所有Tauri命令处理器：
 
-  - `agents.rs`: 自定义代理管理和执行
+  - `agents.rs`: 自定义智能体管理和执行
   - `claude.rs`: iflow会话和项目管理
   - `mcp.rs`: 模型上下文协议服务器管理
   - `usage.rs`: 使用分析和统计
   - `storage.rs`: 数据库操作和管理
-  - `proxy.rs`: 代理配置管理
+  - `proxy.rs`: 智能体配置管理
   - `slash_commands.rs`: 自定义斜杠命令管理
 - **checkpoint/**: 检查点和时间线管理，用于会话版本控制
-- **process/**: 进程注册表，用于管理运行的iflow和代理会话
+- **process/**: 进程注册表，用于管理运行的iflow和智能体会话
 - **claude_binary.rs**: iflow二进制检测和管理
 
 ### Key Frontend Components
@@ -535,7 +494,7 @@ Communication between frontend and backend happens through Tauri's invoke system
 
 ### 关键前端组件 (Key Frontend Components)
 
-- **代理管理 (Agent Management)**: 用于创建、编辑和运行自定义代理的组件
+- **智能体管理 (Agent Management)**: 用于创建、编辑和运行自定义智能体的组件
 - **项目浏览器 (Project Browser)**: 用于浏览iflow项目和会话的UI
 - **检查点时间线 (Checkpoint Timeline)**: 用于会话版本控制和恢复的可视化时间线
 - **使用仪表板 (Usage Dashboard)**: 用于跟踪iflow使用情况的分析仪表板
@@ -557,9 +516,9 @@ The application uses SQLite for data persistence with multiple tables:
 
 应用程序使用SQLite进行数据持久化，包含多个表：
 
-- 代理配置和运行记录
+- 智能体配置和运行记录
 - 会话历史和检查点
-- 使用统计
+- 使用情况
 - MCP服务器配置
 - 应用程序设置
 - 斜杠命令定义
@@ -576,7 +535,7 @@ The application uses SQLite for data persistence with multiple tables:
 ## 关键功能 (Key Features)
 
 1. **项目和会话管理 (Project & Session Management)**: 可视化浏览iflow项目和会话
-2. **CC代理 (CC Agents)**: 具有后台执行能力的自定义AI代理
+2. **CC智能体 (CC Agents)**: 具有后台执行能力的自定义AI智能体
 3. **使用分析 (Usage Analytics)**: 成本跟踪和令牌使用可视化
 4. **MCP服务器管理 (MCP Server Management)**: 模型上下文协议服务器配置
 5. **时间线和检查点 (Timeline & Checkpoints)**: 具有分支时间线的会话版本控制
@@ -591,11 +550,15 @@ The application uses SQLite for data persistence with multiple tables:
 
 ## 安全模型 (Security Model)
 
-- 代理的进程隔离
-- 每个代理的权限控制
+- 智能体的进程隔离
+- 每个智能体的权限控制
 - 仅本地数据存储
 - 无遥测或数据收集
 
 ## 阶段目标：实现翻译功能
 
-仅翻译中文，其他语言通过languine的同步功能进行处理
+翻译文件路径在src/locales/[locale]/translation.json
+
+中文默认为简体中文：zh-CN
+
+繁体中文需明确表明繁体

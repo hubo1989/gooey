@@ -90,7 +90,7 @@ const TabItem: React.FC<TabItemProps> = ({ tab, isActive, onClose, onClick, isDr
       
       {/* Tab Title */}
       <span className="flex-1 truncate text-xs font-medium min-w-0">
-        {tab.title}
+        {t(tab.title) || tab.title}
       </span>
 
       {/* Status Indicators - always takes up space */}

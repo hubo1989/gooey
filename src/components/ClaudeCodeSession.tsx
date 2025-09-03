@@ -1608,7 +1608,7 @@ export const ClaudeCodeSession: React.FC<ClaudeCodeSessionProps> = ({
               <Label htmlFor="fork-name">New Session Name</Label>
               <Input
                 id="fork-name"
-                placeholder="e.g., Alternative approach"
+                placeholder={t('common.example_alternative_approach')}
                 value={forkSessionName}
                 onChange={(e) => setForkSessionName(e.target.value)}
                 onKeyPress={(e) => {

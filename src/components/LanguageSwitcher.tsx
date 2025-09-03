@@ -15,7 +15,8 @@ interface LanguageSwitcherProps {
 
 const languages = [
   { code: 'en', name: 'English', nativeName: 'English' },
-  { code: 'zh-CN', name: 'Chinese', nativeName: '中文' },
+  { code: 'zh-CN', name: 'Chinese', nativeName: '简体中文' },
+  { code: 'zh-TW', name: 'Cantonese', nativeName: '繁體中文' },
   { code: 'ja', name: 'Japanese', nativeName: '日本語' },
   { code: 'ko', name: 'Korean', nativeName: '한국어' },
   { code: 'es', name: 'Spanish', nativeName: 'Español' },

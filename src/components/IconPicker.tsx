@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   // Interface & Navigation
   Home,
@@ -331,6 +332,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
 
@@ -368,7 +370,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] p-0">
         <DialogHeader className="px-6 py-4 border-b">
-          <DialogTitle>Choose an icon</DialogTitle>
+          <DialogTitle>{t('common.choose_icon')}</DialogTitle>
         </DialogHeader>
 
         {/* Search Bar */}
@@ -376,7 +378,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
           <div className="relative">
             <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search icons..."
+              placeholder={t('common.search_icons_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
