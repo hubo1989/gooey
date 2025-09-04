@@ -1,45 +1,44 @@
-// i18next-scanner 配置文件 (CommonJS)
-// 与 Languine 协同工作，专注于字符串提取
+// i18next-scanner configuration file (CommonJS)
 
 module.exports = {
   options: {
     debug: process.env.NODE_ENV === 'development',
     
-    // 识别翻译函数
+    // Identify translation functions
     func: {
       list: ['t', 'i18next.t', 'i18n.t'],
       extensions: ['.tsx', '.ts', '.jsx', '.js']
     },
     
-    // Trans 组件支持（暂时禁用，因为TypeScript语法解析有问题）
+    // Trans component support (disabled due to TypeScript syntax parsing issues)
     trans: false,
     
-    // 语言和命名空间配置（与Languine保持一致）
-    lngs: ['en'],  // 只提取英文，翻译由Languine处理
+    // Language and namespace configuration
+    lngs: ['en', 'zh-CN', 'zh-TW', 'ja', 'ko', 'es', 'fr', 'de', 'pt', 'ru', 'it'],
     ns: ['translation'],
     defaultLng: 'en',
     defaultNs: 'translation',
     
-    // 资源文件配置（与Languine输出路径一致）
+    // Resource file configuration
     resource: {
       loadPath: 'src/locales/{{lng}}/translation.json',
       savePath: 'src/locales/{{lng}}/translation.json',
       jsonIndent: 2
     },
     
-    // 键分隔符配置
+    // Key separator configuration
     nsSeparator: false,
     keySeparator: false,
     
-    // 上下文信息
+    // Context information
     context: true,
     contextFallback: true,
     
-    // 排序键名
+    // Sort keys
     sort: true
   },
   
-  // 输入文件配置（与Languine提取模式一致）
+  // Input file configuration
   input: [
     'src/**/*.{ts,tsx,js,jsx}',
     '!src/**/*.d.ts',

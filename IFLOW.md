@@ -260,7 +260,11 @@ The application uses SQLite for data persistence with multiple tables:
 
 ## 阶段目标：实现翻译功能
 
-仅翻译中文，其他语言通过languine的同步功能进行处理
+翻译文件路径在src/locales/[locale]/translation.json
+
+中文默认为简体中文：zh-CN
+
+繁体中文需明确表明繁体
 
 ## AI Guidance
 

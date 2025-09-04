@@ -150,29 +150,7 @@ Menu → MCP Manager → Add Server → Configure
 - Import from Claude Desktop configuration
 - Test connections before using
 
-### Configuring Languine Project ID
 
-To configure the Languine project ID for internationalization:
-
-1. Open the `languine.json` file in the project root
-2. Set the `projectId` field to your desired project identifier
-3. Save the file
-
-Example:
-```json
-{
-  "projectId": "your-project-id-here",
-  "locale": {
-    "source": "en",
-    "targets": ["zh-CN", "zh-TW", "ja", "ko", "es", "fr", "de", "pt", "ru", "it"]
-  },
-  "files": {
-    "json": {
-      "include": ["src/locales/[locale].json"]
-    }
-  }
-}
-```
 
 ## 🚀 Installation
 
